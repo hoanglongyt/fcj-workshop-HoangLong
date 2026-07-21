@@ -1,29 +1,29 @@
 ---
 title: "Báo cáo thực tập"
-date: 2024-01-01
+date: 2026-05-05
 weight: 1
 chapter: false
 ---
 
 # Báo cáo thực tập
 ### Thông tin sinh viên:
-&emsp; **Họ và tên:** Nguyễn Văn A
+&emsp; **Họ và tên:** Lý Hoàng Long
 
-&emsp; **Số điện thoại:** 0989888999
+&emsp; **Số điện thoại:** 0934586095
 
-&emsp; **Email:** Anguyenvan@gmail.com
+&emsp; **Email:** lyhoanglong1709@gmail.com
 
-&emsp; **Trường:** Đại học Sư phạm Kỹ thuật TP.HCM
+&emsp; **Trường:** Ho Chi Minh City University of Technology (HUTECH)
 
-&emsp; **Ngành:** Công nghệ thông tin
+&emsp; **Ngành:** Công nghệ phần mềm
 
-&emsp; **Lớp:** AWS082025
+&emsp; **Lớp:** 22DTHC5
 
 &emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Viet Nam
 
 &emsp; **Vị trí thực tập:** Workforce Bootcamp - First Cloud AI Journey
 
-&emsp; **Thời gian thực tập:** Từ ngày 12/08/2025 đến ngày 12/11/2025
+&emsp; **Thời gian thực tập:** Từ ngày 05/05/2026 đến ngày 30/07/2026
 
 ![Ảnh đại diện của bạn](/images/avatar.png)
 
