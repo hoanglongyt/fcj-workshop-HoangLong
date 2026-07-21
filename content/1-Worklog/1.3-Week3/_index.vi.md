@@ -24,7 +24,7 @@ pre: " <b> 1.3. </b> "
 | 3   | - Sử dụng AWS CLI để tự động hóa quản trị tài nguyên.<br>                                            | 20/05/2026   | 20/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
 | 4   | - Triển khai AWS Backup phục vụ sao lưu và khôi phục dữ liệu | 21/05/2026   | 21/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
 | 5   | - <br>                  | 22/05/2026   | 22/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; các kỹ thuật quản trị hạ tầng bằng dòng lệnh.                                                                                         | 23/05/2026   | 23/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
+| 6   | - **Thực hành:**&emsp; các kỹ thuật quản trị hạ tầng bằng dòng lệnh.                                                                                         | 23/05/2026   | 23/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
 
 
 ### Kết quả đạt được tuần 3:
