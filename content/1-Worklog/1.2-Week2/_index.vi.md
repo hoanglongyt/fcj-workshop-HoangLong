@@ -18,7 +18,7 @@ pre: " <b> 1.2. </b> "
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Tìm hiểu các lý thuyết của IAM: root account, group, policy, role <br>                                                                                         | 12/05/2026   | 12/05/2026      |
+| 2   | - Tìm hiểu các lý thuyết của IAM: root account, group, policy, role <br>                                                                                         | 12/05/2026   | 12/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
 | 3   | - Học về kiến trúc mạng bảo mật internet gateway, route table, cấu hình VPC endpoint, public/private subnet. <br>                                            | 13/05/2026   | 13/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
 | 4   | - Nghiên cứu và tìm hiểu về cấu hình máy ảo Amazon EC2. | 14/05/2026   | 14/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
 | 5   | - Kết nối Amazon RDS với Node.Js.<br>                  | 15/05/2026   | 15/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
