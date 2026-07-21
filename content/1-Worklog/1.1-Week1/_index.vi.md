@@ -19,7 +19,7 @@ pre: " <b> 1.1. </b> "
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Tham gia First Cloud Journey, tìm hiểu yêu cầu của báo cáo thực tập, cách ghi Worklog và quy trình báo cáo tiến độ. <br>                                                                         | 05/05/2026   | 05/05/2026      |
+| 2   | - Tham gia First Cloud Journey, tìm hiểu yêu cầu của báo cáo thực tập, cách ghi Worklog và quy trình báo cáo tiến độ. <br>                                                                         | 05/05/2026   | 05/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
 | 3   | - Tìm hiểu AWS Free Tier, các giới hạn chi phí và nguyên tắc sử dụng tài khoản an toàn <br>                                            | 06/05/2026   | 06/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
 | 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 07/05/2025   | 07/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
 | 5   | -                   | 08/05/2026   | 08/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
