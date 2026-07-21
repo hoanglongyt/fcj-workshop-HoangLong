@@ -1,126 +1,95 @@
 ---
 title: "Event 1"
-date: 2024-01-01
+date: 2026-05-30
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
-
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+# Summary Report: "AWS First Cloud AI Journey & Sharing Session"
 
 ### Event Objectives
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+- Share experiential journeys, real-world lessons, and strategies to overcome "invisible fears" in life and career from experienced seniors.
+- Gain hands-on perspectives on **Hackathon** competitions from an authentic, humorous, and challenging viewpoint.
+- Introduce interactive methods to enhance AWS skills through **Cloud Quest** and **Floci**.
+- Present real-world application projects ("Tu Vi Dai Viet - Unlocking Destiny, Understanding Yourself").
 
-### Speakers
+### Speakers & Sharing Sessions
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+- **Huynh Thai Linh** - Speaker, First Cloud AI Journey (*"Level Up Your AWS Skills with Cloud Quest and Floci"*)
+- **The Ballers Team (FCAJ Challenger)** - Hackathon experience sharing:
+  - **Huynh An Khuong**
+  - **Mai Quoc Anh**
+  - **Nguyen Tran Minh Quan**
+- **Senior Speakers & Mentors** - Sharing personal journey experiences and overcoming invisible fears in life.
 
 ### Key Highlights
 
-#### Identifying the drawbacks of legacy application architecture
+#### 1. Experiential Journeys & Overcoming Invisible Fears
+- **Sharing from Seniors**: Real stories from experienced predecessors about personal growth, career orientation, and overcoming challenges.
+- **Facing Invisible Fears**: Analyzing hidden anxieties and pressures faced by students and young professionals (fear of failure, peer pressure, career uncertainty).
+- **Key Takeaway**: Turn experiences into tools, actively embrace challenges, and learn from senior perspectives.
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+#### 2. Hands-on Hackathon Experience (The Ballers Team)
+- **A Realistic View on Hackathons**:
+  - *"HA! a tons of fun"* - The excitement of collaborating and creating with teammates.
+  - *"and bug fixes"* - The endless battle with debugging code.
+  - *"and back pains & sleep deprivation"* - All-nighters and familiar backaches among tech enthusiasts.
+- **FCAJ Challenger Spirit**: Teamwork, dedication, and problem-solving under intense time pressure.
 
-#### Transitioning to modern application architecture – Microservices
+![Hackathon sharing by The Ballers Team](/images/4-EventParticipated/4.1-Event1/hackathon.jpg)
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+#### 3. Level Up Your AWS Skills (Huynh Thai Linh)
+- Introduction to gamified Cloud learning via **AWS Cloud Quest** and **Floci**.
+- Skill development roadmap for the First Cloud AI Journey community.
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+![Level Up Your AWS Skills with Cloud Quest and Floci](/images/4-EventParticipated/4.1-Event1/aws-skills.jpg)
 
-#### Domain-Driven Design (DDD)
+#### 4. Understanding Oneself with "Tu Vi Dai Viet" Project
+- Core Message: *"Unlocking Destiny - Understanding the inner self"*.
+- Applying technology to analyze self-awareness and personal orientation.
+- Contact Details & Special Offer:
+  - 50% discount voucher for Standard package: `AWS_STANDARD_50`
+  - Website: `tuvidaiviet.com`
+  - Facebook: `/tuvidaiviet`
+  - Instagram: `@tuvi_daiviet`
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
-
-#### Event-Driven Architecture
-
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
-
-#### Amazon Q Developer
-
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+![Tu Vi Dai Viet project presentation](/images/4-EventParticipated/4.1-Event1/tu-vi-dai-viet.jpg)
 
 ### Key Takeaways
 
-#### Design Mindset
+#### Mindset & Personal Growth
+- **Overcoming Invisible Fears**: Identify and resolve anxieties with a positive mindset and thorough preparation.
+- **Lessons from Experience**: Internalize valuable insights from seniors to better guide future career steps.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+#### Technical & Teamwork Skills
+- **Mastering AWS Skills**: Leverage platforms like AWS Cloud Quest for interactive self-learning.
+- **Hackathon Mindset**: Understand the importance of time management, team synergy, and resilience under pressure.
 
-#### Technical Architecture
+### Applying to Work & Study
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
-
-#### Modernization Strategy
-
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
-
-### Applying to Work
-
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
+- **Practice Cloud Skills**: Register and complete quests on AWS Cloud Quest to strengthen practical AWS knowledge.
+- **Proactive Experiential Learning**: Actively participate in events and step out of comfort zones to dispel invisible fears.
+- **Apply Teamwork Principles**: Enhance coordination, clear task distribution, and mutual support in projects.
 
 ### Event Experience
 
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
+The workshop was a great blend of practical technical knowledge and inspiring life lessons:
 
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
+- **Connection & Inspiration**: Listening to authentic journey stories from seniors helped resolve many personal doubts and invisible fears.
+- **Engaging & Realistic Atmosphere**: The funny yet genuine Hackathon sharing by The Ballers created a welcoming environment.
+- **Discovering New Tools**: Exploring modern AWS learning approaches via Cloud Quest and Floci with Huynh Thai Linh.
 
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
+#### Event Photos
 
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
+![Hackathon sharing by The Ballers Team](/images/4-EventParticipated/4.1-Event1/hackathon.jpg)
+*Photo 1: The Ballers Team sharing their Hackathon experience*
 
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
+![Level Up Your AWS Skills with Cloud Quest and Floci](/images/4-EventParticipated/4.1-Event1/aws-skills.jpg)
+*Photo 2: Speaker Huynh Thai Linh presenting Cloud Quest and Floci*
 
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
+![Tu Vi Dai Viet project presentation](/images/4-EventParticipated/4.1-Event1/tu-vi-dai-viet.jpg)
+*Photo 3: "Tu Vi Dai Viet" project presentation slide*
 
-#### Some event photos
-*Add your event photos here*  
-
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+> Overall, the event provided not only technical knowledge but also powerful inspiration, empowering me to face challenges and invisible fears with confidence on my self-development journey.

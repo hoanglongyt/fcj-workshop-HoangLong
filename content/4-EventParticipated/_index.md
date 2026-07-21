@@ -24,13 +24,17 @@ pre: " <b> 4. </b> "
 During my internship, I participated in two events. Each one was a memorable experience that provided new, interesting, and useful knowledge, along with gifts and wonderful moments.
 
 ### [Event 1](4.1-Event1/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+&emsp;**Event Name:** AWS First Cloud AI Journey & Sharing Session  
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+&emsp;**Date & Time:** 09:00, May 30, 2026  
 
 &emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
 
 &emsp;**Role:** Attendee  
+
+&emsp;**Brief Description:** Learned from senior sharing sessions on experiential journeys & overcoming invisible fears in life, explored hands-on Hackathon experiences (The Ballers team), elevated AWS skills via Cloud Quest & Floci (speaker Huynh Thai Linh), and discovered the "Tu Vi Dai Viet" application project.  
+
+&emsp;**Key Outcomes:** Gained valuable personal growth & career guidance insights, enhanced teamwork & stress management skills under pressure, and mastered interactive self-learning methods for AWS via Cloud Quest.  
 
 ---
 

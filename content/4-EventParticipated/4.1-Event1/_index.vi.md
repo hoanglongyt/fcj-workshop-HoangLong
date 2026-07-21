@@ -1,125 +1,95 @@
 ---
 title: "Event 1"
-date: 2024-01-01
+date: 2026-05-30
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+# Bài thu hoạch sự kiện "AWS First Cloud AI Journey & Sharing Session"
 
 ### Mục Đích Của Sự Kiện
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+- Chia sẻ về các chuyến đi trải nghiệm, bài học thực tế và cách vượt qua những "nỗi sợ vô hình" trong cuộc sống cũng như sự nghiệp từ những cuộc chia sẻ của người đi trước.
+- Trải nghiệm thực tế về cuộc thi **Hackathon** dưới góc nhìn chân thực, dí dỏm nhưng đầy thử thách.
+- Giới thiệu phương pháp nâng cao kỹ năng AWS tương tác qua **Cloud Quest** và **Floci**.
+- Giới thiệu dự án và sản phẩm ứng dụng thực tế ("Tử vi Đại Việt - Giải mã vận mệnh, thấu hiểu bản ngã").
 
-### Danh Sách Diễn Giả
+### Danh Sách Diễn Giả & Diễn Đàn Chia Sẻ
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+- **Huỳnh Thái Linh** - Speaker, First Cloud AI Journey (*"Level Up Your AWS Skills with Cloud Quest and Floci"*)
+- **Nhóm The Ballers (FCAJ Challenger)** - Chia sẻ trải nghiệm Hackathon:
+  - **Huỳnh An Khương**
+  - **Mai Quốc Anh**
+  - **Nguyễn Trần Minh Quân**
+- **Các diễn giả & Đàn anh/Đàn chị đi trước** - Chia sẻ các chuyến đi trải nghiệm và tháo gỡ những nỗi sợ vô hình trong đời sống.
 
 ### Nội Dung Nổi Bật
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+#### 1. Những chuyến đi trải nghiệm & Giải mã những nỗi sợ vô hình
+- **Chia sẻ từ người đi trước**: Những câu chuyện thực tế từ các đàn anh/đàn chị về hành trình trải nghiệm, phát triển bản thân và định hướng sự nghiệp.
+- **Đối mặt với nỗi sợ vô hình**: Phân tích những lo âu, áp lực ngầm trong đời sống mà người trẻ thường gặp phải (nỗi sợ thất bại, áp lực đồng lứa, băn khoăn định hướng).
+- **Bài học rút ra**: Biến trải nghiệm thành hành trang, chủ động đón nhận thử thách và học hỏi từ góc nhìn của những người đi trước.
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+#### 2. Trải nghiệm thực chiến Hackathon (Nhóm The Ballers)
+- **Góc nhìn thực tế về Hackathon**:
+  - *"HA! a tons of fun"* - Niềm vui bùng nổ khi làm việc và sáng tạo cùng đồng đội.
+  - *"and bug fixes"* - Cuộc chiến không hồi kết với việc sửa lỗi lập trình.
+  - *"and back pains & sleep deprivation"* - Những đêm thức trắng và nỗi đau lưng quen thuộc của dân tech.
+- **Tinh thần FCAJ Challenger**: Sự nỗ lực, phối hợp đồng đội và khả năng giải quyết vấn đề dưới áp lực thời gian gay cấn.
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+![Chia sẻ Hackathon từ nhóm The Ballers](/images/4-EventParticipated/4.1-Event1/hackathon.jpg)
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+#### 3. Level Up Your AWS Skills (Huỳnh Thái Linh)
+- Giới thiệu phương pháp học tập và rèn luyện kỹ năng Cloud hiệu quả thông qua **Cloud Quest** (nền tảng học AWS qua game hóa) và **Floci**.
+- Lộ trình nâng cao năng lực AWS dành cho cộng đồng First Cloud AI Journey.
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+![Level Up Your AWS Skills với Cloud Quest và Floci](/images/4-EventParticipated/4.1-Event1/aws-skills.jpg)
 
-#### Domain-Driven Design (DDD)
+#### 4. Thấu hiểu bản thân với dự án "Tử vi Đại Việt"
+- Thông điệp chính: *"Giải mã vận mệnh - Thấu hiểu bản ngã bên trong bạn"*.
+- Ứng dụng công nghệ trong việc phân tích, thấu hiểu bản thân và định hướng cá nhân.
+- Thông tin kết nối & Quà tặng ưu đãi:
+  - Voucher giảm giá 50% cho gói Standard: `AWS_STANDARD_50`
+  - Website: `tuvidaiviet.com`
+  - Fanpage Facebook: `/tuvidaiviet`
+  - Instagram: `@tuvi_daiviet`
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
-
-#### Event-Driven Architecture
-
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
-
-#### Amazon Q Developer
-
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+![Giới thiệu dự án Tử vi Đại Việt](/images/4-EventParticipated/4.1-Event1/tu-vi-dai-viet.jpg)
 
 ### Những Gì Học Được
 
-#### Tư Duy Thiết Kế
+#### Tư Duy & Phát Triển Bản Thân
+- **Vượt qua nỗi sợ vô hình**: Học cách nhận diện và giải tỏa những nỗi sợ vô hình bằng góc nhìn tích cực và sự chuẩn bị kỹ lưỡng.
+- **Bài học từ trải nghiệm**: Tiếp thu kinh nghiệm xương máu từ những người đi trước để định hướng tốt hơn cho bản thân.
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+#### Kỹ Năng Kỹ Thuật & Làm Việc Nhóm
+- **Làm chủ kỹ năng AWS**: Biết cách khai thác các nền tảng như AWS Cloud Quest để tự học và nâng cao tay nghề một cách trực quan.
+- **Tinh thần Hackathon**: Hiểu được tầm quan trọng của quản lý thời gian, sự ăn ý trong team và khả năng chịu áp lực.
 
-#### Kiến Trúc Kỹ Thuật
+### Ứng Dụng Vào Công Việc & Học Tập
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
-
-#### Chiến Lược Hiện Đại Hóa
-
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
-
-### Ứng Dụng Vào Công Việc
-
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+- **Rèn luyện kỹ năng Cloud**: Đăng ký và hoàn thành các quest trên AWS Cloud Quest để củng cố kiến thức AWS thực hành.
+- **Chủ động trải nghiệm**: Tích cực tham gia các sự kiện, không ngại dấn thân vào các thử thách mới để đánh tan nỗi sợ vô hình.
+- **Áp dụng tinh thần làm việc nhóm**: Tăng cường phối hợp, chia sẻ công việc rõ ràng và hỗ trợ đồng đội trong các dự án.
 
 ### Trải nghiệm trong event
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+Buổi workshop là một hành trình kết hợp tuyệt vời giữa kiến thức kỹ thuật thực tế và những bài học truyền cảm hứng sâu sắc về cuộc sống:
 
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
-
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
-
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
-
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
-
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
+- **Sự gắn kết & Cảm hứng**: Được lắng nghe những câu chuyện trải nghiệm chân thành từ các anh chị đi trước, giúp bản thân tháo gỡ nhiều băn khoăn và lo âu vô hình trong cuộc sống.
+- **Không khí sôi nổi & Thực tế**: Phần chia sẻ dí dỏm về Hackathon của nhóm The Ballers tạo không khí vô cùng gần gũi, giúp người nghe hiểu được cả niềm vui lẫn sự vất vả của dân công nghệ.
+- **Học hỏi công cụ mới**: Tiếp cận các phương pháp học AWS mới mẻ qua Cloud Quest và Floci từ diễn giả Huỳnh Thái Linh.
 
 #### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+
+![Chia sẻ Hackathon từ nhóm The Ballers](/images/4-EventParticipated/4.1-Event1/hackathon.jpg)
+*Hình 1: Nhóm The Ballers chia sẻ trải nghiệm tham gia Hackathon với tinh thần FCAJ Challenger*
+
+![Level Up Your AWS Skills với Cloud Quest và Floci](/images/4-EventParticipated/4.1-Event1/aws-skills.jpg)
+*Hình 2: Diễn giả Huỳnh Thái Linh trình bày về Cloud Quest và Floci*
+
+![Giới thiệu dự án Tử vi Đại Việt](/images/4-EventParticipated/4.1-Event1/tu-vi-dai-viet.jpg)
+*Hình 3: Bài trình bày dự án "Tử vi Đại Việt - Giải mã vận mệnh, thấu hiểu bản ngã"*
+
+> Tổng thể, sự kiện không chỉ mang lại kiến thức công nghệ mà còn truyền cảm hứng mạnh mẽ, giúp tôi tự tin hơn trong việc đối mặt với những thử thách và nỗi sợ vô hình trên con đường phát triển bản thân.

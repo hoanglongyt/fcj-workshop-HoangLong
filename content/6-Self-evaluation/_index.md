@@ -1,39 +1,37 @@
 ---
-title: "Self-Assessment"
-date: 2024-01-01
+title: "Self-Evaluation"
+date: 2026-07-20
 weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+During my internship at Amazon Web Services Vietnam Co. from 05/05/2026 to 30/07/2026, I had the opportunity to learn, practice, and apply the knowledge acquired at university into a real-world working environment.
 
-During my internship at **[Company/Organization Name]** from **[start date]** to **[end date]**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
-I participated in **[briefly describe the main project or task]**, through which I improved my skills in **[list skills: programming, analysis, reporting, communication, etc.]**.  
+I participated in researching, designing, and deploying AWS cloud infrastructure solutions (Compute, Storage, Database, Serverless, IaC with AWS CDK, DevOps CI/CD, Observability & Security), thereby improving my skills in account security, IAM, EC2, S3, DynamoDB, SQS, Bedrock, CloudFront, CloudWatch, SNS, Backup, CI/CD, and cleanup.
 
-In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.
+In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively communicated with colleagues to enhance work efficiency.
 
 To objectively reflect on my internship period, I would like to evaluate myself based on the following criteria:
 
+
 | No. | Criteria                            | Description                                                                                      | Good | Fair | Average |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | ---- | ---- | ------- |
-| 1   | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, proficiency with tools, work quality | ✅    | ☐    | ☐       |
-| 2   | **Ability to learn**                | Ability to absorb new knowledge and learn quickly                                                | ☐    | ✅    | ☐       |
-| 3   | **Proactiveness**                   | Taking initiative, seeking out tasks without waiting for instructions                            | ✅    | ☐    | ☐       |
-| 4   | **Sense of responsibility**         | Completing tasks on time and ensuring quality                                                    | ✅    | ☐    | ☐       |
-| 5   | **Discipline**                      | Adhering to schedules, rules, and work processes                                                 | ☐    | ☐    | ✅       |
-| 6   | **Progressive mindset**             | Willingness to receive feedback and improve oneself                                              | ☐    | ✅    | ☐       |
-| 7   | **Communication**                   | Presenting ideas and reporting work clearly                                                      | ☐    | ✅    | ☐       |
-| 8   | **Teamwork**                        | Working effectively with colleagues and participating in teams                                   | ✅    | ☐    | ☐       |
-| 9   | **Professional conduct**            | Respecting colleagues, partners, and the work environment                                        | ✅    | ☐    | ☐       |
-| 10  | **Problem-solving skills**          | Identifying problems, proposing solutions, and showing creativity                                | ☐    | ✅    | ☐       |
-| 11  | **Contribution to project/team**    | Work effectiveness, innovative ideas, recognition from the team                                  | ✅    | ☐    | ☐       |
-| 12  | **Overall**                         | General evaluation of the entire internship period                                               | ✅    | ☐    | ☐       |
+| 1   | **Professional Knowledge & Skills** | Applying AWS services to project architecture                                                    | ✅   | ☐    | ☐       |
+| 2   | **Ability to Learn**                | Following the CloudJourney roadmap quickly                                                       | ☐    | ✅   | ☐       |
+| 3   | **Proactiveness**                   | Self-learning knowledge, preparing evidence for new workshops                                    | ✅   | ☐    | ☐       |
+| 4   | **Sense of Responsibility**         | Completing tasks on time and ensuring quality                                                    | ✅   | ☐    | ☐       |
+| 5   | **Discipline**                      | Need to log work earlier instead of accumulating updates at the end of the term                  | ☐    | ✅   | ☐       |
+| 6   | **Progressive Mindset**             | Willingness to receive feedback and improve oneself                                              | ☐    | ✅   | ☐       |
+| 7   | **Communication**                   | Reporting work clearly, improving bilingual explanations of architecture and workflow             | ☐    | ✅   | ☐       |
+| 8   | **Teamwork**                        | Working effectively with colleagues and participating in teams                                   | ✅   | ☐    | ☐       |
+| 9   | **Professional Conduct**            | Not copying sample content and clearly marking missing evidence                                  | ✅   | ☐    | ☐       |
+| 10  | **Problem-solving Mindset**        | Connecting project requirements with deployable AWS components                                   | ☐    | ✅   | ☐       |
+| 11  | **Contribution to Project/Team**    | Preparing report content and architecture diagrams                                               | ☐    | ✅   | ☐       |
+| 12  | **Overall**                         | Clear project direction, but still lacking final AWS screenshots and published blog links         | ✅   | ☐    | ☐       |
 
 ### Needs Improvement
 
-* Strengthen discipline and strictly comply with the rules and regulations of the company or any organization  
-* Improve problem-solving thinking  
-* Enhance communication skills in both daily interactions and professional contexts, including handling situations effectively
+* Enhance discipline and strictly comply with company regulations or any organization's rules
+* Publish and attach links to the three AWS Study Group articles.
+* Keep the project scope small enough to complete and demo clearly.
