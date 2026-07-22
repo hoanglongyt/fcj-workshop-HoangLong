@@ -16,19 +16,7 @@ pre: " <b> 4.2. </b> "
 
 ### MINH CHỨNG THAM GIA SỰ KIỆN (06/06/2026)
 
- **1. Tệp Video Minh Chứng (MP4)**:
-
- **[ BẤM VÀO ĐÂY ĐỂ XEM HOẶC TẢI VIDEO MINH CHỨNG EVENT 2 (MP4)](https://raw.githubusercontent.com/NguyenPhuocAnhDung/fcj-workshop-NguyenPhuocAnhDung/main/static/images/4-EventParticipated/event2_video.mp4)**
-*(Tệp đính kèm phụ: [Tải bản video HD proof.mp4](https://raw.githubusercontent.com/NguyenPhuocAnhDung/fcj-workshop-NguyenPhuocAnhDung/main/static/images/4-EventParticipated/event2_proof.mp4))*
-
-Trình phát video trực tiếp (Hiển thị đầy đủ khi chạy trang web Hugo):
-<video controls width="100%" style="border-radius: 8px; margin-top: 10px; max-height: 480px;">
- <source src="/images/4-EventParticipated/event2_video.mp4" type="video/mp4">
- <source src="/images/4-EventParticipated/event2_proof.mp4" type="video/mp4">
- Trình duyệt của bạn không hỗ trợ phát trực tiếp video. Vui lòng bấm link phía trên để xem.
-</video>
-
- **2. Hình Ảnh Minh Chứng Tham Gia Sự Kiện**:
+ **Hình Ảnh Minh Chứng Tham Gia Sự Kiện**:
 
 ![Slide thảo luận panel về định hướng kỹ năng AI](/images/4-EventParticipated/4.2-Event2/event2_photo1.jpg)
 *Hình 1: Slide thảo luận chủ đề kỹ năng dành cho các nhà xây dựng trẻ (Young Builders) trong thời đại AI*
