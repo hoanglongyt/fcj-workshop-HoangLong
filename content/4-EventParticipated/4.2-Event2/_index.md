@@ -1,16 +1,42 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-06-06
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
-
 # Summary Report: “GenAI-powered App-DB Modernization workshop”
+
+### Time & Location
+
+- **Time:** 09:00, June 06, 2026
+- **Location:** 26th Floor, Bitexco Financial Tower, No. 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City
+- **Role:** Attendee
+
+### EVENT PROOF OF PARTICIPATION (06/06/2026)
+
+ **1. Proof Video File (MP4)**:
+
+ **[ CLICK HERE TO VIEW OR DOWNLOAD EVENT 2 PROOF VIDEO (MP4)](https://raw.githubusercontent.com/NguyenPhuocAnhDung/fcj-workshop-NguyenPhuocAnhDung/main/static/images/4-EventParticipated/event2_video.mp4)**
+*(Supplementary File: [Download HD video proof.mp4](https://raw.githubusercontent.com/NguyenPhuocAnhDung/fcj-workshop-NguyenPhuocAnhDung/main/static/images/4-EventParticipated/event2_proof.mp4))*
+
+Live Video Player (Displayed when running Hugo website):
+<video controls width="100%" style="border-radius: 8px; margin-top: 10px; max-height: 480px;">
+ <source src="/images/4-EventParticipated/event2_video.mp4" type="video/mp4">
+ <source src="/images/4-EventParticipated/event2_proof.mp4" type="video/mp4">
+ Your browser does not support inline video playback. Please click the link above to view.
+</video>
+
+ **2. Event Proof Photos**:
+
+![Panel Discussion Slide on AI Career Skills](/images/4-EventParticipated/4.2-Event2/event2_photo1.jpg)
+*Figure 1: Panel discussion slide on essential skills for young builders in the AI era*
+
+![GraphRAG Presentation Slide with Amazon Bedrock & Neptune](/images/4-EventParticipated/4.2-Event2/event2_photo2.jpg)
+*Figure 2: Presentation slide on GraphRAG (Building GraphRAG applications using Amazon Bedrock and Amazon Neptune)*
+
+---
 
 ### Event Objectives
 
@@ -120,7 +146,12 @@ Attending the **“GenAI-powered App-DB Modernization”** workshop was extremel
 - Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
 - AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
 
-#### Some event photos
-*Add your event photos here*  
+#### Event Proof Photos
+
+![Panel Discussion Slide on AI Career Skills](/images/4-EventParticipated/4.2-Event2/event2_photo1.jpg)
+*Figure 1: Panel discussion slide on essential skills for young builders in the AI era*
+
+![GraphRAG Presentation Slide with Amazon Bedrock & Neptune](/images/4-EventParticipated/4.2-Event2/event2_photo2.jpg)
+*Figure 2: Presentation slide on GraphRAG (Building GraphRAG applications using Amazon Bedrock and Amazon Neptune)*
 
 > Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.

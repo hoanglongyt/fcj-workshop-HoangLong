@@ -1,16 +1,42 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-06-06
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 # Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+
+### Thời Gian & Địa Điểm
+
+- **Thời gian:** 09:00, Ngày 06/06/2026
+- **Địa điểm:** Tầng 26, Tòa nhà Bitexco, Số 02 Đường Hải Triều, Phường Sài Gòn, TP. Hồ Chí Minh
+- **Vai trò:** Người tham dự
+
+### MINH CHỨNG THAM GIA SỰ KIỆN (06/06/2026)
+
+ **1. Tệp Video Minh Chứng (MP4)**:
+
+ **[ BẤM VÀO ĐÂY ĐỂ XEM HOẶC TẢI VIDEO MINH CHỨNG EVENT 2 (MP4)](https://raw.githubusercontent.com/NguyenPhuocAnhDung/fcj-workshop-NguyenPhuocAnhDung/main/static/images/4-EventParticipated/event2_video.mp4)**
+*(Tệp đính kèm phụ: [Tải bản video HD proof.mp4](https://raw.githubusercontent.com/NguyenPhuocAnhDung/fcj-workshop-NguyenPhuocAnhDung/main/static/images/4-EventParticipated/event2_proof.mp4))*
+
+Trình phát video trực tiếp (Hiển thị đầy đủ khi chạy trang web Hugo):
+<video controls width="100%" style="border-radius: 8px; margin-top: 10px; max-height: 480px;">
+ <source src="/images/4-EventParticipated/event2_video.mp4" type="video/mp4">
+ <source src="/images/4-EventParticipated/event2_proof.mp4" type="video/mp4">
+ Trình duyệt của bạn không hỗ trợ phát trực tiếp video. Vui lòng bấm link phía trên để xem.
+</video>
+
+ **2. Hình Ảnh Minh Chứng Tham Gia Sự Kiện**:
+
+![Slide thảo luận panel về định hướng kỹ năng AI](/images/4-EventParticipated/4.2-Event2/event2_photo1.jpg)
+*Hình 1: Slide thảo luận chủ đề kỹ năng dành cho các nhà xây dựng trẻ (Young Builders) trong thời đại AI*
+
+![Slide trình bày về GraphRAG với Amazon Bedrock và Amazon Neptune](/images/4-EventParticipated/4.2-Event2/event2_photo2.jpg)
+*Hình 2: Slide trình bày chủ đề GraphRAG (Xây dựng ứng dụng GraphRAG sử dụng Amazon Bedrock và Amazon Neptune)*
+
+---
 
 ### Mục Đích Của Sự Kiện
 
@@ -120,6 +146,12 @@ Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải 
 - Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
 - Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
 
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
+#### Một số hình ảnh minh chứng khi tham gia sự kiện
+
+![Slide thảo luận panel về định hướng kỹ năng AI](/images/4-EventParticipated/4.2-Event2/event2_photo1.jpg)
+*Hình 1: Slide thảo luận chủ đề kỹ năng dành cho các nhà xây dựng trẻ (Young Builders) trong thời đại AI*
+
+![Slide trình bày về GraphRAG với Amazon Bedrock và Amazon Neptune](/images/4-EventParticipated/4.2-Event2/event2_photo2.jpg)
+*Hình 2: Slide trình bày chủ đề GraphRAG (Xây dựng ứng dụng GraphRAG sử dụng Amazon Bedrock và Amazon Neptune)*
+
 > Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
