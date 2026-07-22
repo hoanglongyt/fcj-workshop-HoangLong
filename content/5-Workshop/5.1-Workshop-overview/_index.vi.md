@@ -12,6 +12,8 @@ pre : " <b> 5.1. </b> "
 
 Hệ thống được phát triển nhằm giải quyết bài toán quản lý biển báo giao thông tập trung, cho phép người dùng tra cứu vị trí, gửi đóng góp biển báo mới, hỗ trợ nhận diện biển báo qua hình ảnh AI và đồng bộ tự động dữ liệu từ OpenStreetMap.
 
+- **Đường dẫn ứng dụng Static Web (AWS S3 Hosting):** [http://tsl-signmap-production-static-web-ckroy7.s3-website-ap-southeast-1.amazonaws.com/](http://tsl-signmap-production-static-web-ckroy7.s3-website-ap-southeast-1.amazonaws.com/)
+
 ---
 
 #### 2. Danh sách 9 Dịch Vụ AWS Chính Thức Trong Hạ Tầng

@@ -12,6 +12,8 @@ pre : " <b> 5.1. </b> "
 
 The system provides centralized traffic sign management, enabling users to search sign locations, contribute new traffic signs, utilize AI image-based sign recognition, and automatically sync sign data from OpenStreetMap.
 
+- **Static Web Application URL (AWS S3 Hosting):** [http://tsl-signmap-production-static-web-ckroy7.s3-website-ap-southeast-1.amazonaws.com/](http://tsl-signmap-production-static-web-ckroy7.s3-website-ap-southeast-1.amazonaws.com/)
+
 ---
 
 #### 2. Key AWS Services in the Infrastructure
