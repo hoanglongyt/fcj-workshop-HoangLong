@@ -1,33 +1,36 @@
 ---
 title: "Workshop"
-date: 2024-01-01
+date: 2026-07-22
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-
-# Đảm bảo truy cập Hybrid an toàn đến S3 bằng cách sử dụng VPC endpoint
+# Thiết kế và Triển khai Hạ tầng AWS cho Hệ thống TSL-SignMap
 
 #### Tổng quan
 
-**AWS PrivateLink** cung cấp kết nối riêng tư đến các dịch vụ aws từ VPCs hoặc trung tâm dữ liệu (on-premise) mà không làm lộ lưu lượng truy cập ra ngoài public internet.
+**TSL-SignMap** là hệ thống quản lý, đóng góp và tra cứu thông tin biển báo giao thông không gian GIS (SRID 4326), được vận hành trên hạ tầng đám mây **AWS** tuân theo tiêu chuẩn **AWS Well-Architected Framework**. Hệ thống được thiết kế với tính sẵn sàng cao (High Availability), khả năng mở rộng linh hoạt (Scalability) và bảo mật nhiều lớp (Defense-in-Depth).
 
-Trong bài lab này, chúng ta sẽ học cách tạo, cấu hình, và kiểm tra VPC endpoints để cho phép workload của bạn tiếp cận các dịch vụ AWS mà không cần đi qua Internet công cộng.
+Trong workshop này, chúng ta sẽ thực hành xây dựng, cấu hình và tối ưu hóa hạ tầng AWS toàn diện cho TSL-SignMap với các khối kiến trúc chính:
 
-Chúng ta sẽ tạo hai loại endpoints để truy cập đến Amazon S3: gateway vpc endpoint và interface vpc endpoint. Hai loại vpc endpoints này mang đến nhiều lợi ích tùy thuộc vào việc bạn truy cập đến S3 từ môi trường cloud hay từ trung tâm dữ liệu (on-premise).
-+ **Gateway** - Tạo gateway endpoint để gửi lưu lượng đến Amazon S3 hoặc DynamoDB using private IP addresses. Bạn điều hướng lưu lượng từ VPC của bạn đến gateway endpoint bằng các bảng định tuyến (route tables)
-+ **Interface** - Tạo interface endpoint để gửi lưu lượng đến các dịch vụ điểm cuối (endpoints) sử dụng Network Load Balancer để phân phối lưu lượng. Lưu lượng dành cho dịch vụ điểm cuối được resolved bằng DNS.
++ **Tầng Edge & Bảo mật (Global Edge Layer):** Sử dụng **Amazon Route 53**, **AWS CloudFront (CDN)** kết hợp **AWS WAF** và **AWS Certificate Manager (ACM)** giúp tăng tốc độ phân phối trang React Admin Web, bảo vệ chống tấn công web và quản lý chứng chỉ SSL/TLS.
++ **Tầng Mạng VPC 3-Tier Multi-AZ:** Thiết lập AWS VPC phân chia theo 2 Availability Zones (AZ-A & AZ-B) gồm 3 phân vùng subnet:
+  - **Public Subnet:** Chứa **Application Load Balancer (ALB)** tiếp nhận lưu lượng HTTPS và các **NAT Gateway** cho truy cập Internet chiều ra.
+  - **Private App Subnet:** Chứa cụm **Auto Scaling Group** vận hành **Ocelot API Gateway** cùng **7 Microservices Containers** và **SageMaker AI Endpoint** kết nối đến mô hình nhận diện biển báo YOLO AI.
+  - **Private DB Subnet:** Chứa cơ sở dữ liệu **AWS RDS for SQL Server 2022** mô hình Primary - Standby (Multi-AZ replication) và cụm bộ nhớ đệm **Amazon ElastiCache (Redis)**.
++ **Dịch vụ Tích hợp & Kết nối Riêng tư (VPC Endpoints & Storage):**
+  - **S3 VPC Endpoint (Gateway/Interface):** Cho phép các Microservices truy cập an toàn đến **S3 Media Bucket** (chứa ảnh biển báo) mà không đi qua Internet công cộng.
+  - **SageMaker VPC Endpoint:** Cho phép API Gateway gọi các endpoint AI SageMaker hoàn toàn trong mạng nội bộ.
+  - **EC2 Scraper Instance:** Tự động cào dữ liệu từ OpenStreetMap API và cập nhật vào RDS SQL Server.
++ **Sao lưu & Phục hồi Thảm họa (Disaster Recovery & Backup):** Tự động đồng bộ dữ liệu sang **Secondary Disaster Recovery Region** thông qua AWS Backup, RDS Backup và S3 Cross-Region Replication.
++ **Quản trị & Giám sát (Governance & Monitoring):** Tích hợp **AWS Secrets Manager**, **AWS IAM**, **Amazon ECR** và **Amazon CloudWatch** để giám sát và quản lý hạ tầng tập trung.
 
 #### Nội dung
 
-1. [Tổng quan về workshop](5.1-Workshop-overview/)
-2. [Chuẩn bị](5.2-Prerequiste/)
-3. [Truy cập đến S3 từ VPC](5.3-S3-vpc/)
-4. [Truy cập đến S3 từ TTDL On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (làm thêm)](5.5-Policy/)
+1. [Tổng quan hệ thống TSL-SignMap và Hạ tầng AWS](5.1-Workshop-overview/)
+2. [Chuẩn bị và Phân chia mạng VPC 3-Tier](5.2-Prerequiste/)
+3. [Thiết lập cụm Microservices và Cơ sở dữ liệu RDS](5.3-S3-vpc/)
+4. [Cấu hình AWS CloudFront và S3 Static Web](5.4-S3-onprem/)
+5. [Cấu hình VPC Endpoints (S3 & SageMaker) và Policies](5.5-Policy/)
 6. [Dọn dẹp tài nguyên](5.6-Cleanup/)

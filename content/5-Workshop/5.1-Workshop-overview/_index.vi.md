@@ -1,19 +1,142 @@
 ---
 title : "Giới thiệu"
-date : 2024-01-01 
+date : 2026-07-22 
 weight : 1
 chapter : false
 pre : " <b> 5.1. </b> "
 ---
 
-#### Giới thiệu về VPC Endpoint
+#### 1. Tổng quan Hệ thống TSL-SignMap
 
-+ Điểm cuối VPC (endpoint) là thiết bị ảo. Chúng là các thành phần VPC có thể mở rộng theo chiều ngang, dự phòng và có tính sẵn sàng cao. Chúng cho phép giao tiếp giữa tài nguyên điện toán của bạn và dịch vụ AWS mà không gây ra rủi ro về tính sẵn sàng.
-+ Tài nguyên điện toán đang chạy trong VPC có thể truy cập Amazon S3 bằng cách sử dụng điểm cuối Gateway. Interface Endpoint  PrivateLink có thể được sử dụng bởi tài nguyên chạy trong VPC hoặc tại TTDL.
+**TSL-SignMap** là hệ thống quản lý, đóng góp và tra cứu thông tin biển báo giao thông không gian GIS (chuẩn dữ liệu địa lý SRID 4326), được vận hành trên hạ tầng đám mây AWS với thiết kế **VPC 3-Tier Multi-AZ**, cụm **Microservices Container**, tích hợp **AI SageMaker (YOLO)** và CSDL **RDS SQL Server 2022**.
 
-#### Tổng quan về workshop
-Trong workshop này, bạn sẽ sử dụng hai VPC.
-+ **"VPC Cloud"** dành cho các tài nguyên cloud như Gateway endpoint và EC2 instance để kiểm tra.
-+ **"VPC On-Prem"** mô phỏng môi trường truyền thống như nhà máy hoặc trung tâm dữ liệu của công ty. Một EC2 Instance chạy phần mềm StrongSwan VPN đã được triển khai trong "VPC On-prem" và được cấu hình tự động để thiết lập đường hầm VPN Site-to-Site với AWS Transit Gateway. VPN này mô phỏng kết nối từ một vị trí tại TTDL (on-prem) với AWS cloud. Để giảm thiểu chi phí, chỉ một phiên bản VPN được cung cấp để hỗ trợ workshop này. Khi lập kế hoạch kết nối VPN cho production workloads của bạn, AWS khuyên bạn nên sử dụng nhiều thiết bị VPN để có tính sẵn sàng cao.
+Hệ thống được phát triển nhằm giải quyết bài toán quản lý biển báo giao thông tập trung, cho phép người dùng tra cứu vị trí, gửi đóng góp biển báo mới, hỗ trợ nhận diện biển báo qua hình ảnh AI và đồng bộ tự động dữ liệu từ OpenStreetMap.
+
+---
+
+#### 2. Danh sách 9 Dịch Vụ AWS Chính Thức Trong Hạ Tầng
+
+| STT | Dịch Vụ AWS | Vai Trò & Chức Năng Chi Tiết | Thông Số & Cổng |
+| :--- | :--- | :--- | :--- |
+| 1 | **AWS CloudFront** | Mạng phân phối nội dung (CDN) toàn cầu cho ứng dụng React Admin Web (`ADMIN.WEB`), nạp trang `< 100ms`. | Port 443 (HTTPS) |
+| 2 | **AWS Simple Storage Service (S3)** | Lưu trữ các tệp tĩnh Frontend (`dist/`) và các tệp ảnh biển báo người dùng tải lên (`S3 Media Bucket`). | S3 Standard Bucket |
+| 3 | **AWS Application Load Balancer (ALB)** | Cân bằng tải và định tuyến kết nối HTTPS API (`/api/*`) từ ngoài Internet vào Ocelot API Gateway. | Public Subnet `10.0.1.0/24` |
+| 4 | **AWS Elastic Container Registry (ECR)** | Kho lưu trữ các Docker Container Images bảo mật cho 8 Microservices & Python Scraper. | Private Docker Registry |
+| 5 | **AWS Elastic Container Service (ECS) Fargate** | Cụm Serverless Container runtime quản lý và vận hành 8 Microservices containers. | Private App Subnet `10.0.2.0/24` |
+| 6 | **AWS Cloud Map** | Dịch vụ Service Discovery DNS nội bộ mạng VPC (`*.local`) giúp Ocelot API Gateway điều hướng đến 7 Microservices. | Internal DNS `*.local` |
+| 7 | **AWS Relational Database Service (RDS)** | Cơ sở dữ liệu SQL Server 2022 lưu trữ 1,286+ biển báo GIS geography SRID 4326, user và giao dịch. | Port 1433 (Private DB Subnet `10.0.3.0/24`) |
+| 8 | **AWS EventBridge** | Đặt lịch Cronjob (`0 2 * * ? *` - 2h sáng) tự động kích hoạt Python Scraper Task cào dữ liệu 15 tỉnh thành. | Cron Schedule |
+| 9 | **AWS Secrets Manager & ACM** | Quản lý mã hóa bí mật (Connection Strings/JWT Keys) và cấp chứng chỉ SSL HTTPS miễn phí cho ALB. | Encrypted Secrets / TLS |
+
+---
+
+#### 3. Cấu trúc Phân Mạng VPC 3-Tier (VPC Architecture)
+
+- **AWS Region:** Singapore (`ap-southeast-1`)
+- **AWS VPC CIDR:** `10.0.0.0/16`
+- **Các phân vùng Subnet Multi-AZ (AZ-A & AZ-B):**
+  1. **Public Subnet (`10.0.1.0/24`):** Chứa AWS Application Load Balancer (ALB) nhận traffic công cộng và các NAT Gateway.
+  2. **Private App Subnet (`10.0.2.0/24`):** Chứa cụm AWS ECS Fargate Cluster gồm 8 Microservices:
+     - `ApiGateway Container` (Port 5008 - Ocelot API Gateway)
+     - `UserService` (Port 5001)
+     - `TrafficSignService` (Port 5002)
+     - `ContributionService` (Port 5003)
+     - `FeedbackService` (Port 5004)
+     - `PaymentService` (Port 5005)
+     - `RewardService` (Port 5006)
+     - `NotificationService` (Port 5007)
+     - `ECS Fargate Scraper Task` (`scrape_signs.py`)
+     - `AWS Cloud Map` (Service Discovery) & `SageMaker AI Endpoint` (YOLO AI model)
+  3. **Private DB Subnet (`10.0.3.0/24`):** Chứa CSDL AWS RDS for SQL Server 2022 (Port 1433) mô hình Primary - Standby và cụm cache Amazon ElastiCache (Redis).
+
+---
+
+#### 4. Sơ Đồ Kiến Trúc Hệ Thống (System Architecture Diagram)
 
 ![overview](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+
+```mermaid
+graph TB
+    subgraph AWSCloud["AWS Cloud"]
+        subgraph Region["AWS Region: Singapore (ap-southeast-1)"]
+            
+            subgraph EdgeLayer["Edge & Security Services"]
+                CF["AWS CloudFront<br/>(React Admin Web CDN)"]
+                S3Web["AWS S3 Bucket<br/>(Frontend dist/ Static Assets)"]
+                ACM["AWS Certificate Manager (ACM)<br/>(SSL/TLS HTTPS)"]
+                SECRETS["AWS Secrets Manager<br/>(Connection Strings & JWT Keys)"]
+                EB["AWS EventBridge<br/>(Cron: 0 2 * * ? *)"]
+            end
+
+            subgraph VPC["AWS VPC (10.0.0.0/16)"]
+                
+                subgraph PublicSubnet["Public Subnet (10.0.1.0/24)"]
+                    ALB["AWS Application Load Balancer (ALB)<br/>(HTTPS API Routing /api/*)"]
+                end
+
+                subgraph PrivateAppSubnet["Private App Subnet (10.0.2.0/24)"]
+                    subgraph ECSCluster["AWS ECS Fargate Cluster"]
+                        GW["ApiGateway Container<br/>(Port 5008)"]
+                        
+                        US["UserService (5001)"]
+                        TS["TrafficSignService (5002)"]
+                        CS["ContributionService (5003)"]
+                        FS["FeedbackService (5004)"]
+                        PS["PaymentService (5005)"]
+                        RS["RewardService (5006)"]
+                        NS["NotificationService (5007)"]
+
+                        SCRAPER["ECS Fargate Scraper Task<br/>(scrape_signs.py)"]
+                    end
+                    
+                    CM["AWS Cloud Map<br/>(Service Discovery DNS *.local)"]
+                    SM["SageMaker Endpoint<br/>(YOLO AI Model)"]
+                end
+
+                subgraph PrivateDBSubnet["Private DB Subnet (10.0.3.0/24)"]
+                    RDS[("AWS RDS for SQL Server 2022<br/>(Port 1433 \| 1,286+ Signs GIS SRID 4326)")]
+                    CACHE["Amazon ElastiCache<br/>(Redis Cache)"]
+                end
+
+            end
+
+            S3Media["AWS S3 Media Bucket<br/>(Uploaded Sign Images)"]
+            ECR["AWS Elastic Container Registry (ECR)<br/>(Docker Container Images)"]
+        end
+    end
+
+    CLIENT_WEB["Client Admin Web"] -->|HTTPS| CF
+    CF -->|Fetch static site| S3Web
+    CLIENT_APP["Client Mobile / Web"] -->|HTTPS /api/*| ALB
+    ACM -.->|HTTPS Cert| ALB
+
+    ALB -->|Forward HTTPS| GW
+
+    CM -.->|DNS Routing *.local| GW
+    GW -->|Port 5001| US
+    GW -->|Port 5002| TS
+    GW -->|Port 5003| CS
+    GW -->|Port 5004| FS
+    GW -->|Port 5005| PS
+    GW -->|Port 5006| RS
+    GW -->|Port 5007| NS
+    GW -->|SageMaker VPCE| SM
+
+    US -->|Port 1433| RDS
+    TS -->|Port 1433| RDS
+    CS -->|Port 1433| RDS
+    FS -->|Port 1433| RDS
+    PS -->|Port 1433| RDS
+    RS -->|Port 1433| RDS
+    NS -->|Port 1433| RDS
+
+    CS -->|Upload Images| S3Media
+
+    EB -->|Trigger 2h sáng| SCRAPER
+    SCRAPER -->|Cập nhật CSDL| RDS
+    SCRAPER -->|Cache Data| CACHE
+
+    ECR -.->|Pull Images| ECSCluster
+    SECRETS -.->|Inject Secrets| ECSCluster
+    SECRETS -.->|Inject Secrets| RDS
+```
