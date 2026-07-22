@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1.11. </b> "
 ---
 
-### Week 15 Objectives:
+### Week 11 Objectives:
 
 * Complete the Workshop project on the AWS platform.
 * Test and optimize the system features.
