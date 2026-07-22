@@ -6,17 +6,21 @@ chapter : false
 pre : " <b> 5.3.2 </b> "
 ---
 
-#### 1. Tổng quan cụm EC2 Microservices và Service Discovery
+#### 1. Tổng quan cụm EC2 Microservices & Endpoints Theo Sơ Đồ Kiến Trúc
 
-Trong phần này, chúng ta sẽ triển khai cụm 8 Microservices trên các máy chủ **AWS EC2 Instances** trong **Private App Subnet** (`10.0.2.0/24`) kết hợp dịch vụ định tuyến tên **AWS Cloud Map Service Discovery (`*.local`)** và cấu hình **Ocelot API Gateway**.
+Dựa trên sơ đồ kiến trúc **`TSLSignMap.drawio.png`**, cụm 8 Microservices và các máy chủ điện toán được thiết kế đảm bảo khả năng cân bằng tải, mở rộng tự động và kết nối riêng tư:
 
-- **AWS EC2 Microservices Instances:** Triển khai các Docker Containers bao gồm `Ocelot API Gateway (Port 5008)` và 7 dịch vụ nghiệp vụ (`UserService:5001`, `TrafficSignService:5002`, `ContributionService:5003`, `FeedbackService:5004`, `PaymentService:5005`, `RewardService:5006`, `NotificationService:5007`).
-- **AWS Cloud Map (Service Discovery):** Khởi tạo namespace DNS riêng tư **`tslsignmap.local`** giúp Ocelot API Gateway điều hướng linh hoạt request đến các IP máy chủ nội bộ.
-- **EC2 Scraper Instance:** Máy chủ chuyên biệt chạy script Python `scrape_signs.py` được tự động kích hoạt bởi lịch **AWS EventBridge** (2h sáng hàng ngày) để thu thập dữ liệu biển báo từ OpenStreetMap API và cập nhật vào RDS SQL Server.
+- **ALB (6) & Target Group -> Auto Scaling Group:** Luồng kết nối HTTPS API `/api/*` (4) đi từ CloudFront/Route 53 qua Internet Gateway (5) tới **ALB (6)**. ALB phân phối lưu lượng tới **Target Group** điều hướng vào cụm máy chủ **`EC2 Ocelot API + 7 Containers`** nằm trong **Auto Scaling Group** spanning qua 2 vùng **AZ - A (Private subnet A)** và **AZ - B (Private subnet B)**.
+- **Endpoint SageMaker (9):** Kết nối trực tiếp mô hình AI **SageMaker (YOLO AI)** qua điểm cuối riêng tư **`Endpoint (SageMaker) (9)`** vào `EC2 Ocelot API + 7 Containers` để thực hiện nhận diện biển báo qua hình ảnh.
+- **Endpoint S3 (10):** Kết nối cụm microservices với **`S3 (Media Bucket)`** thông qua điểm cuối riêng tư **`EndPoint - S3 (10)`** để lưu trữ và truy xuất các tệp ảnh biển báo người dùng tải lên.
+- **EC2 Scraper Instance (11):** Đặt tại **AZ - A (Private subnet A)**, vận hành script `scrape_signs.py` theo lịch Cronjob:
+  - Cào dữ liệu biển báo từ **OpenStreetMap API** qua **NAT Gateway** (tại Public Subnet A).
+  - Cập nhật trực tiếp dữ liệu cào được vào **RDS Primary - SQL (7)**.
+  - Cập nhật bộ nhớ đệm vào cụm **Amazon ElastiCache (Redis)**.
 
 ---
 
-#### 2. Quy Trình Triển Khai Chi Tiết
+#### 2. Quy Trình Triển Khai Chi Tiết Theo Sơ Đồ
 
 ##### Bước 1: Khởi tạo Private DNS Namespace trên AWS Cloud Map
 1. Mở **AWS Cloud Map Console**, bấm **Create namespace**.
@@ -34,7 +38,7 @@ Trong phần này, chúng ta sẽ triển khai cụm 8 Microservices trên các 
    - `notification.tslsignmap.local` (Port 5007)
 
 ##### Bước 2: Cấu hình Ocelot API Gateway (`ocelot.json`)
-Cấu hình định tuyến từ ALB (Port 5008) đến các microservices nội bộ:
+Cấu hình định tuyến từ ALB (6) (Port 5008) đến các microservices nội bộ:
 ```json
 {
   "Routes": [
@@ -66,8 +70,8 @@ Cấu hình định tuyến từ ALB (Port 5008) đến các microservices nội
 }
 ```
 
-##### Bước 3: Triển khai Docker Containers trên máy chủ EC2
-1. Khởi tạo máy chủ **EC2 Instances** trong Private App Subnet.
+##### Bước 3: Triển khai Docker Containers trên EC2 Auto Scaling Group
+1. Khởi tạo máy chủ **EC2 Instances** trong Private Subnet A (AZ-A) và Private Subnet B (AZ-B).
 2. Đăng nhập Docker Registry **AWS ECR** và pull các Container Images:
    ```bash
    aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com
@@ -78,8 +82,8 @@ Cấu hình định tuyến từ ALB (Port 5008) đến các microservices nội
    docker run -d --name trafficsignservice -p 5002:5002 -e "ConnectionStrings__SQLServer=Server=tsl-signmap-db.c123456789.ap-southeast-1.rds.amazonaws.com;Database=TSLSignMapDB;User Id=tslsignadmin;Password=<secret_password>;" <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com/tsl-trafficsign-service:latest
    ```
 
-##### Bước 4: Khởi chạy EC2 Scraper Task (`scrape_signs.py`)
-Khởi chạy EC2 Scraper Instance thu thập dữ liệu từ OpenStreetMap API:
+##### Bước 4: Khởi chạy EC2 Scraper Instance (11)
+Khởi chạy EC2 Scraper Instance (11) tại Private Subnet A cào dữ liệu từ OpenStreetMap API:
 ```bash
 python3 scrape_signs.py --province "HoChiMinh" --batch-size 500
 ```
@@ -88,14 +92,14 @@ python3 scrape_signs.py --province "HoChiMinh" --batch-size 500
 
 #### 3. Kiểm Tra Luồng Dữ Liệu và Health Check API
 
-1. Truy cập Health Check endpoint của Ocelot API Gateway từ ALB:
+1. Truy cập Health Check endpoint của Ocelot API Gateway từ ALB (6):
    ```bash
    curl -I https://api.tsl-signmap.com/api/trafficsigns/health
    ```
    *Kết quả:* Trả về HTTP Status `200 OK`.
 
-2. Thử nghiệm tra cứu vị trí biển báo GIS địa lý SRID 4326:
+2. Thử nghiệm tra cứu vị trí biển báo GIS địa lý SRID 4326 qua Endpoint SageMaker (9) và RDS Primary (7):
    ```bash
    curl -X GET "https://api.tsl-signmap.com/api/trafficsigns/nearby?lat=10.7769&lng=106.7009&radius=500"
    ```
-   *Kết quả:* Trả về danh sách JSON chứa các biển báo giao thông được cache bởi Redis và truy vấn từ RDS SQL Server 2022.
+   *Kết quả:* Trả về danh sách JSON chứa các biển báo giao thông được cache bởi Redis và truy vấn từ RDS Primary SQL (7).
