@@ -6,10 +6,10 @@ chapter: false
 pre: " <b> 7. </b> "
 ---
 
-### Đánh giá chung
+### Đánh giá tổng quan
 
 **1. Môi trường làm việc**  
-Mỗi tuần chương trình tập trung vào một nhóm kiến thức mới, giúp em tiếp cận được nhiều thông tin hữu ích cho các dự án về sau. Những khái niệm như IAM, networking hay monitoring lúc đọc riêng khá rời rạc, nhưng khi deploy chung một hệ thống thì em hiểu chúng hoạt động với nhau như thế nào.
+Mỗi tuần chương trình lại tập trung vào một nhóm kiến thức mới, giúp mình tiếp cận được rất nhiều thông tin hữu ích cho các dự án sau này. Những khái niệm như IAM, networking hay monitoring trước đây đọc riêng lẻ thì thấy khá rời rạc, nhưng khi triển khai nguyên một hệ thống cùng nhau thì mới hiểu được cách chúng phối hợp với nhau như thế nào.
 
 **2. Sự hỗ trợ của mentor / team admin**  
 Trong quá trình hoàn thiện báo cáo, có những thời điểm em chưa xác định rõ nội dung nào phù hợp để trình bày và các minh chứng nào đủ cơ sở để đưa vào báo cáo. Em đã chủ động trao đổi với mentor và đội ngũ admin, đối chiếu với tài liệu hướng dẫn, đồng thời kiểm tra lại kết quả thực hành thông qua CLI output, screenshot và kết quả triển khai thực tế. Nhờ đó, nội dung báo cáo phản ánh đúng quá trình thực hiện, đảm bảo tính chính xác và bám sát những công việc em đã trực tiếp thực hiện.
@@ -25,8 +25,8 @@ Văn hóa làm việc tôn trọng, bình đẳng và cùng hướng tới mục
 
 ### Một số câu hỏi khác
 - Điều bạn **hài lòng nhất** trong thời gian thực tập?  
-    ->  Được áp dụng kiến thức AWS, tự kiểm tra hệ thống sau khi deploy
-- Điều bạn nghĩ công ty **cần cải thiện** cho các thực tập sinh sau? 
+    -> Được áp dụng kiến thức AWS, tự kiểm tra hệ thống sau khi deploy
+- Điều bạn nghĩ công ty **cần cải thiện** cho các thực tập sinh sau?  
     -> Nên có các buổi review ngắn sau mỗi giai đoạn để sinh viên biết phần nào chưa ổn và điều chỉnh sớm hơn.
 - Nếu giới thiệu cho bạn bè, bạn có **khuyên họ thực tập ở đây không**? Vì sao?  
     -> Có, nhất là với những bạn muốn tìm hiểu về AWS.
@@ -35,7 +35,7 @@ Văn hóa làm việc tôn trọng, bình đẳng và cùng hướng tới mục
 ### Đề xuất & mong muốn
 - Bạn có đề xuất gì để cải thiện trải nghiệm trong kỳ thực tập?  
     -> Em mong các mốc deadline và yêu cầu đầu ra được thông báo sớm hơn để sinh viên chủ động sắp xếp thời gian.
-- Bạn có muốn tiếp tục chương trình này trong tương lai? 
-    -> Nếu có cơ hội, em muốn tiếp tục tham gia để học sâu hơn và làm thêm các project thực tế 
-- Góp ý khác (tự do chia sẻ):
-    ->  Em cảm ơn các anh chị admin đã hỗ trợ trong suốt chương trình
+- Bạn có muốn tiếp tục chương trình này trong tương lai?  
+    -> Nếu có cơ hội, em muốn tiếp tục tham gia để học sâu hơn và làm thêm các project thực tế.
+- Góp ý khác (tự do chia sẻ):  
+    -> Em cảm ơn các anh chị admin đã hỗ trợ trong suốt chương trình.
