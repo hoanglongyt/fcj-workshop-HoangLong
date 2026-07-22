@@ -1,51 +1,101 @@
 ---
-title : "Kiểm tra Gateway Endpoint"
-date : 2024-01-01 
+title : "Triển khai cụm EC2 Microservices, Ocelot API Gateway & AWS Cloud Map"
+date : 2026-07-22 
 weight : 2
 chapter : false
 pre : " <b> 5.3.2 </b> "
 ---
 
-#### Tạo S3 bucket
+#### 1. Tổng quan cụm EC2 Microservices và Service Discovery
 
-1. Đi đến S3 management console
-2. Trong Bucket console, chọn **Create bucket**
-3. Trong Create bucket console:
-+ Đặt tên bucket: chọn 1 tên mà không bị trùng trong phạm vi toàn cầu
-+ Giữ nguyên giá trị của các fields khác (default)
-+ Kéo chuột xuống và chọn **Create bucket**
-+ Tạo thành công S3 bucket.
+Trong phần này, chúng ta sẽ triển khai cụm 8 Microservices trên các máy chủ **AWS EC2 Instances** trong **Private App Subnet** (`10.0.2.0/24`) kết hợp dịch vụ định tuyến tên **AWS Cloud Map Service Discovery (`*.local`)** và cấu hình **Ocelot API Gateway**.
 
-#### Kết nối với EC2 bằng session manager
+- **AWS EC2 Microservices Instances:** Triển khai các Docker Containers bao gồm `Ocelot API Gateway (Port 5008)` và 7 dịch vụ nghiệp vụ (`UserService:5001`, `TrafficSignService:5002`, `ContributionService:5003`, `FeedbackService:5004`, `PaymentService:5005`, `RewardService:5006`, `NotificationService:5007`).
+- **AWS Cloud Map (Service Discovery):** Khởi tạo namespace DNS riêng tư **`tslsignmap.local`** giúp Ocelot API Gateway điều hướng linh hoạt request đến các IP máy chủ nội bộ.
+- **EC2 Scraper Instance:** Máy chủ chuyên biệt chạy script Python `scrape_signs.py` được tự động kích hoạt bởi lịch **AWS EventBridge** (2h sáng hàng ngày) để thu thập dữ liệu biển báo từ OpenStreetMap API và cập nhật vào RDS SQL Server.
 
-+ Trong workshop này, bạn sẽ dùng AWS Session Manager để kết nối đến các EC2 instances. Session Manager là 1 tính năng trong dịch vụ Systems Manager được quản lý hoàn toàn bởi AWS. System manager cho phép bạn quản lý Amazon EC2 instances và các máy ảo on-premises thông qua 1 browser-based shell.
+---
 
-1. Trong AWS Management Console, gõ Systems Manager trong ô tìm kiếm và nhấn Enter.
-2. Từ **Systems Manager** menu, tìm **Node Management** ở thanh bên trái và chọn **Session Manager**.
-3. Click Start Session, và chọn EC2 instance tên **Test-Gateway-Endpoint**. 
+#### 2. Quy Trình Triển Khai Chi Tiết
 
-{{% notice info %}}
-Phiên bản EC2 này đã chạy trong "VPC cloud" và sẽ được dùng để kiểm tra khả năng kết nối với Amazon S3 thông qua điểm cuối Cổng mà bạn vừa tạo (s3-gwe).
-{{% /notice %}}
+##### Bước 1: Khởi tạo Private DNS Namespace trên AWS Cloud Map
+1. Mở **AWS Cloud Map Console**, bấm **Create namespace**.
+2. Namespace name: Nhập `tslsignmap.local`.
+3. Instance discovery: Chọn **API calls and DNS queries in VPCs**.
+4. VPC: Chọn `TSL-SignMap-VPC`.
+5. Đăng ký 8 Services:
+   - `gateway.tslsignmap.local` (Port 5008)
+   - `user.tslsignmap.local` (Port 5001)
+   - `trafficsign.tslsignmap.local` (Port 5002)
+   - `contribution.tslsignmap.local` (Port 5003)
+   - `feedback.tslsignmap.local` (Port 5004)
+   - `payment.tslsignmap.local` (Port 5005)
+   - `reward.tslsignmap.local` (Port 5006)
+   - `notification.tslsignmap.local` (Port 5007)
 
-Session Manager sẽ mở browser tab mới với shell prompt: `sh-4.2 $`.
+##### Bước 2: Cấu hình Ocelot API Gateway (`ocelot.json`)
+Cấu hình định tuyến từ ALB (Port 5008) đến các microservices nội bộ:
+```json
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/v1/trafficsigns/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "trafficsign.tslsignmap.local",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/trafficsigns/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/contributions/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "contribution.tslsignmap.local",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/api/contributions/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    }
+  ]
+}
+```
 
-Bạn đã bắt đầu phiên kết nối đến EC2 trong VPC Cloud thành công.
+##### Bước 3: Triển khai Docker Containers trên máy chủ EC2
+1. Khởi tạo máy chủ **EC2 Instances** trong Private App Subnet.
+2. Đăng nhập Docker Registry **AWS ECR** và pull các Container Images:
+   ```bash
+   aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com
+   docker pull <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com/tsl-trafficsign-service:latest
+   ```
+3. Khởi chạy cụm 8 microservices containers với Docker Compose hoặc Docker CLI:
+   ```bash
+   docker run -d --name trafficsignservice -p 5002:5002 -e "ConnectionStrings__SQLServer=Server=tsl-signmap-db.c123456789.ap-southeast-1.rds.amazonaws.com;Database=TSLSignMapDB;User Id=tslsignadmin;Password=<secret_password>;" <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com/tsl-trafficsign-service:latest
+   ```
 
-#### Tạo file và tải lên S3 bucket
+##### Bước 4: Khởi chạy EC2 Scraper Task (`scrape_signs.py`)
+Khởi chạy EC2 Scraper Instance thu thập dữ liệu từ OpenStreetMap API:
+```bash
+python3 scrape_signs.py --province "HoChiMinh" --batch-size 500
+```
 
-1. Đổi về ssm-user's thư mục bằng lệnh `cd ~`
-2. Tạo 1 file để kiểm tra bằng lệnh `fallocate -l 1G testfile.xyz`, 1 file tên `testfile.xyz` có kích thước 1GB sẽ được tạo.
-3. Tải file mình vừa tạo lên S3 với lệnh `aws s3 cp testfile.xyz s3://your-bucket-name`. Thay `your-bucket-name` bằng tên S3 bạn đã tạo.
+---
 
-Bạn đã tải thành công tệp lên bộ chứa S3 của mình. Bây giờ bạn có thể kết thúc session.
+#### 3. Kiểm Tra Luồng Dữ Liệu và Health Check API
 
-#### Kiểm tra object trong S3 bucket
+1. Truy cập Health Check endpoint của Ocelot API Gateway từ ALB:
+   ```bash
+   curl -I https://api.tsl-signmap.com/api/trafficsigns/health
+   ```
+   *Kết quả:* Trả về HTTP Status `200 OK`.
 
-1. Đi đến S3 console.  
-2. Click tên s3 bucket của bạn.
-3. Trong Bucket console, bạn sẽ thấy tệp bạn đã tải lên S3 bucket của mình.
-
-#### Tóm tắt
-
-Chúc mừng bạn đã hoàn thành truy cập S3 từ VPC. Trong phần này, bạn đã tạo gateway endpoint cho Amazon S3 và sử dụng AWS CLI để tải file lên. Quá trình tải lên hoạt động vì gateway endpoint cho phép giao tiếp với S3 mà không cần Internet gateway gắn vào "VPC Cloud". Điều này thể hiện chức năng của gateway endpoint như một đường dẫn an toàn đến S3 mà không cần đi qua public Internet.
+2. Thử nghiệm tra cứu vị trí biển báo GIS địa lý SRID 4326:
+   ```bash
+   curl -X GET "https://api.tsl-signmap.com/api/trafficsigns/nearby?lat=10.7769&lng=106.7009&radius=500"
+   ```
+   *Kết quả:* Trả về danh sách JSON chứa các biển báo giao thông được cache bởi Redis và truy vấn từ RDS SQL Server 2022.
