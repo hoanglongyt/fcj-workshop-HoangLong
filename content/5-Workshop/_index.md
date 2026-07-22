@@ -1,5 +1,5 @@
 ---
-title: "Workshop"
+title: "Design and Deploy AWS Infrastructure for TSL-SignMap System"
 date: 2026-07-22
 weight: 5
 chapter: false

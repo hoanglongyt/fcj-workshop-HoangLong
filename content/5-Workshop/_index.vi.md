@@ -1,5 +1,5 @@
 ---
-title: "Workshop"
+title: "Thiết kế và Triển khai Hạ tầng AWS cho Hệ thống TSL-SignMap"
 date: 2026-07-22
 weight: 5
 chapter: false
