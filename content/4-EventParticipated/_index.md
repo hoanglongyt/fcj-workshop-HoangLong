@@ -1,34 +1,19 @@
 ---
 title: "Events Participated"
-date: 2024-01-01
+date: 2026-06-30
 weight: 4
 chapter: false
 pre: " <b> 4. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** for your report, including this warning.
-{{% /notice %}}
+During my internship, I participated in two major events. Each event provided valuable hands-on experience and insightful cloud technical knowledge:
 
-> In this section, you should list and describe in detail the events you have participated in during your internship or work experience.  
-> 
-> Each event should be presented in the format Event 1, Event 2, Event 3…, along with the following details:
-> * Event name
-> * Date and time
-> * Location (if applicable)
-> * Your role in the event (attendee, event support, speaker, etc.)
-> * A brief description of the event’s content and main activities
-> * Outcomes or value gained (lessons learned, new skills, contribution to the team/project)
-> * This listing helps demonstrate your actual participation as well as the soft skills and experience you have gained from each event.
-
-During my internship, I participated in two events. Each one was a memorable experience that provided new, interesting, and useful knowledge, along with gifts and wonderful moments.
-
-### [Event 1](4.1-Event1/)  
+### [Event 1 - AWS First Cloud AI Journey & Sharing Session](4.1-Event1/)  
 &emsp;**Event Name:** AWS First Cloud AI Journey & Sharing Session  
 
 &emsp;**Date & Time:** 09:00, May 30, 2026  
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+&emsp;**Location:** 26th Floor, Bitexco Financial Tower, No. 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City  
 
 &emsp;**Role:** Attendee  
 
@@ -38,11 +23,15 @@ During my internship, I participated in two events. Each one was a memorable exp
 
 ---
 
-### [Event 2](4.2-Event2/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+### [Event 2 - GenAI-powered App-DB Modernization Workshop](4.2-Event2/)  
+&emsp;**Event Name:** GenAI-powered App-DB Modernization Workshop  
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+&emsp;**Date & Time:** 09:00, June 06, 2026  
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+&emsp;**Location:** 26th Floor, Bitexco Financial Tower, No. 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City  
 
 &emsp;**Role:** Attendee  
+
+&emsp;**Brief Description:** Attended an application and database modernization workshop powered by Generative AI with AWS expert speakers (Jignesh Shah, Erica Liu, Fabrianne Effendi). Key topics included Domain-Driven Design (DDD), Event-Driven Architecture, compute evolution (EC2 ➔ ECS ➔ Fargate ➔ Lambda), and Amazon Q Developer for SDLC automation.  
+
+&emsp;**Key Outcomes:** Mastered a business-first design mindset, microservice decomposition using bounded contexts, asynchronous event-driven messaging, and leveraging Amazon Q Developer to boost development productivity.  
