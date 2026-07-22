@@ -5,28 +5,52 @@ weight : 6
 chapter : false
 pre : " <b> 5.6. </b> "
 ---
-Congratulations on completing this workshop! 
-In this workshop, you learned architecture patterns for accessing Amazon S3 without using the Public Internet. 
-+ By creating a gateway endpoint, you enabled direct communication between EC2 resources and Amazon S3, without traversing an Internet Gateway. 
-+ By creating an interface endpoint you extended S3 connectivity to resources running in your on-premises data center via AWS Site-to-Site VPN or Direct Connect. 
 
-#### clean up
-1. Navigate to Hosted Zones on the left side of Route 53 console. Click the name of *s3.us-east-1.amazonaws.com* zone. Click Delete and confirm deletion by typing delete. 
+#### 1. Workshop Conclusion
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+Congratulations on successfully completing the hands-on workshop for designing, deploying, and securing the **TSL-SignMap** AWS cloud infrastructure!
 
-2. Disassociate the Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+Throughout this workshop, you implemented key cloud architecture patterns adhering to the **AWS Well-Architected Framework**:
+- Provisioned a **3-Tier Multi-AZ AWS VPC (`10.0.0.0/16`)** spanning 2 Availability Zones (**AZ - A** and **AZ - B**).
+- Deployed **AWS EC2 Instances** hosting Ocelot API Gateway, 7 Microservices Containers, and the EC2 Scraper Instance.
+- Configured internal service discovery via **AWS Cloud Map (`*.local`)**.
+- Built a high-availability **AWS RDS for SQL Server 2022** (Primary - Standby Multi-AZ) database and an **Amazon ElastiCache (Redis)** cache cluster.
+- Secured private service connectivity with **S3 VPC Endpoint** and **SageMaker VPC Endpoint (YOLO AI)** hardened by **VPC Endpoint Policies**.
+- Accelerated global content delivery for React Admin Web using **AWS CloudFront CDN** and **S3 Static Web**.
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+---
 
-4. Open the CloudFormation console  and delete the two CloudFormation Stacks that you created for this lab:
-+ PLOnpremSetup
-+ PLCloudSetup
+#### 2. Resource Cleanup Steps
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+To avoid incurring unexpected charges on your AWS account, clean up all provisioned resources in the following step-by-step order:
 
-5. Delete S3 buckets
-+ Open S3 console
-+ Choose the bucket we created for the lab, click and confirm empty. Click delete and confirm delete.
+##### Step 1: Delete VPC Endpoints
+1. Open the **AWS VPC Console** and navigate to **Endpoints**.
+2. Select the created endpoints (`s3-gwe` and `sagemaker-vpce`).
+3. Click **Actions** -> select **Delete endpoints** and confirm.
 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+##### Step 2: Delete Application Load Balancer (ALB)
+1. Navigate to **EC2 Console** and select **Load Balancers**.
+2. Select `TSL-SignMap-ALB`.
+3. Click **Actions** -> select **Delete load balancer** and confirm.
+
+##### Step 3: Terminate EC2 Instances
+1. In the **EC2 Console**, click **Instances**.
+2. Select `EC2 Microservices Instance` and `EC2 Scraper Instance`.
+3. Click **Instance state** -> select **Terminate instance** and confirm.
+
+##### Step 4: Delete RDS SQL Server & ElastiCache Redis
+1. Open the **Amazon RDS Console** and select **Databases**.
+2. Select `tsl-signmap-db`.
+3. Click **Actions** -> select **Delete** (uncheck *Create final snapshot* if not required) and type `delete me` to confirm.
+4. Open **Amazon ElastiCache Console**, select the Redis cluster, and click **Delete**.
+
+##### Step 5: Delete S3 Buckets
+1. Open the **Amazon S3 Console**.
+2. Select `tsl-signmap-media-bucket` and the `S3 Static Web` bucket.
+3. Click **Empty** to clear all stored objects, then click **Delete** and type the bucket name to permanently remove them.
+
+##### Step 6: Delete AWS VPC & Network Infrastructure
+1. Open the **AWS VPC Console** and select **Your VPCs**.
+2. Select `TSL-SignMap-VPC`.
+3. Click **Actions** -> select **Delete VPC** and confirm. AWS will automatically clean up associated Subnets, Route Tables, Internet Gateways, and Security Groups.
