@@ -1,43 +1,73 @@
 ---
-title : "Tạo một S3 Interface endpoint"
-date : 2024-01-01
+title : "Cấu hình AWS CloudFront CDN & Origin Access Control (OAC)"
+date : 2026-07-22 
 weight : 2
 chapter : false
 pre : " <b> 5.4.2 </b> "
 ---
 
-Trong phần này, bạn sẽ tạo và kiểm tra Interface Endpoint  S3 bằng cách sử dụng môi trường truyền thống mô phỏng.
+#### 1. Tổng quan Bước 5.4.2
 
-1. Quay lại Amazon VPC menu. Trong thanh điều hướng bên trái, chọn Endpoints, sau đó click Create Endpoint.
+Trong bước này, bạn sẽ cấu hình phân phối **AWS CloudFront Distribution** tại tầng **Global Edge Services** kết nối tới bộ chứa **S3 Static Web Bucket (`tsl-signmap-production-static-web-ckroy7`)**.
 
-2. Trong Create endpoint console:
-+ Đặt tên interface endpoint
-+ Trong Service category, chọn **aws services** 
+- **Mục tiêu:** Tăng tốc nạp ứng dụng React Admin Web xuống dưới `< 100ms` toàn cầu và thắt chặt bảo mật bằng **Origin Access Control (OAC)** để bắt buộc mọi truy cập phải đi qua CloudFront CDN.
 
-![name](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint1.png)
+---
 
-3.  Trong Search box, gõ S3 và nhấn Enter. Chọn endpoint có tên com.amazonaws.us-east-1.s3. Đảm bảo rằng cột Type có giá trị Interface.
+#### 2. Quy Trình Thực Hiện Chi Tiết
 
-![service](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint2.png)
+##### Bước 1: Khởi tạo CloudFront Distribution
+1. Mở **AWS CloudFront Console**, bấm **Create distribution**.
+2. **Origin domain:** Chọn S3 Bucket `tsl-signmap-production-static-web-ckroy7.s3.ap-southeast-1.amazonaws.com`.
+3. **Origin access:**
+   - Chọn **Origin access control settings (recommended)**.
+   - Bấm **Create control setting**, giữ tên mặc định và bấm **Create**.
+4. **Default cache behavior:**
+   - Viewer protocol policy: Chọn **Redirect HTTP to HTTPS**.
+   - Allowed HTTP methods: Chọn `GET, HEAD`.
+   - Cache key and origin requests: Chọn **CachingOptimized** (Policy khuyến nghị tối ưu cache tệp tĩnh).
+5. **Price class:** Chọn **Use all edge locations (best performance)** hoặc Price Class 100.
+6. Default root object: Nhập `index.html`.
+7. Bấm **Create distribution**.
 
-4. Đối với VPC, chọn VPC Cloud từ drop-down.
-{{% notice warning %}}
-Đảm bảo rằng bạn chọn "VPC Cloud" và không phải "VPC On-prem"
-{{% /notice %}}
-+ Mở rộng **Additional settings** và đảm bảo rằng Enable DNS name *không* được chọn (sẽ sử dụng điều này trong phần tiếp theo của workshop)
+##### Bước 2: Cập nhật S3 Bucket Policy với OAC
+1. Sau khi tạo Distribution, CloudFront cung cấp một đoạn JSON **S3 Bucket Policy**. Sao chép đoạn policy này.
+2. Truy cập **AWS S3 Console** -> chọn bucket `tsl-signmap-production-static-web-ckroy7` -> thẻ **Permissions**.
+3. Tại mục **Bucket policy**, bấm **Edit** và dán đoạn JSON:
+   ```json
+   {
+       "Version": "2012-10-17",
+       "Statement": {
+           "Sid": "AllowCloudFrontServicePrincipalReadOnly",
+           "Effect": "Allow",
+           "Principal": {
+               "Service": "cloudfront.amazonaws.com"
+           },
+           "Action": "s3:GetObject",
+           "Resource": "arn:aws:s3:::tsl-signmap-production-static-web-ckroy7/*",
+           "Condition": {
+               "StringEquals": {
+                   "AWS:SourceArn": "arn:aws:cloudfront::<account_id>:distribution/<distribution_id>"
+               }
+           }
+       }
+   }
+   ```
+4. Bấm **Save changes**.
 
-![vpc](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint3.png)
+##### Bước 3: Cấu hình Custom Error Responses cho React SPA Routing
+Để tránh lỗi `404 Not Found` khi người dùng refresh các tuyến đường trong React Router (ví dụ `/admin/signs`, `/admin/users`):
+1. Trong CloudFront Distribution -> chọn thẻ **Error pages** -> chọn **Create custom error response**.
+2. HTTP error code: Chọn **404: Not Found**.
+3. Customize error response: Chọn **Yes**.
+4. Response page path: Nhập `/index.html`.
+5. HTTP response code: Chọn **200: OK**.
+6. Bấm **Create custom error response**.
 
-5. Chọn 2 subnets trong AZs sau: us-east-1a and us-east-1b
+---
 
-![subnets](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint4.png)
+#### 3. Kiểm Tra Kết Nối
 
-6. Đối với Security group, chọn SGforS3Endpoint:
-
-![sg](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint5.png)
-
-7. Giữ default policy - full access và click Create endpoint
-
-![success](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint-success.png)
-
-Chúc mừng bạn đã tạo thành công S3 interface endpoint. Ở bước tiếp theo, chúng ta sẽ kiểm tra interface endpoint.
+1. Sao chép tên miền CloudFront Domain Name (ví dụ `d123456789.cloudfront.net`).
+2. Mở trình duyệt và truy cập: `https://d123456789.cloudfront.net`
+3. Kiểm tra trang web nạp thành công qua kết nối bảo mật HTTPS với độ trễ phản hồi `< 100ms`.

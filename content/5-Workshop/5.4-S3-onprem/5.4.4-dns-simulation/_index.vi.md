@@ -1,118 +1,58 @@
 ---
-title : "Mô phỏng On-premises DNS "
-date : 2024-01-01
+title : "Cấu hình Tường lửa AWS WAF & Giám sát Tầng Edge"
+date : 2026-07-22 
 weight : 4
 chapter : false
 pre : " <b> 5.4.4 </b> "
 ---
 
- AWS PrivateLink endpoint có một địa chỉ IP cố định trong từng AZ nơi chúng được triển khai, trong suốt thời gian tồn tại của endpoint (cho đến khi endpoint bị xóa). Các địa chỉ IP này được gắn vào Elastic network interface (ENI). AWS khuyến nghị sử dụng DNS để resolve địa chỉ IP cho endpoint để các ứng dụng downstream sử dụng địa chỉ IP mới nhất khi ENIs được thêm vào AZ mới hoặc bị xóa theo thời gian.
+#### 1. Tổng quan Bước 5.4.4
 
-Trong phần này, bạn sẽ tạo một quy tắc chuyển tiếp (forwarding rule) để gửi các yêu cầu resolve DNS từ môi trường truyền thống (mô phỏng) đến Private Hosted Zone trên Route 53. Phần này tận dụng cơ sở hạ tầng do CloudFormation triển khai trong phần Chuẩn bị môi trường.
+Trong bước này, bạn sẽ triển khai tường lửa ứng dụng web **AWS WAF (Web Application Firewall)** tại vùng **Global Edge Services** đính kèm trực tiếp vào phân phối **CloudFront CDN**.
 
-#### Tạo DNS Alias Records cho Interface endpoint
-1. Click link để đi đến [Route 53 management console](https://us-east-1.console.aws.amazon.com/route53/v2/hostedzones?region=us-east-1#) (Hosted Zones section).  Mẫu CloudFormation mà bạn triển khai trong phần Chuẩn bị môi trường đã tạo Private Hosted Zone này. Nhấp vào tên của Private Hosted Zone, s3.us-east-1.amazonaws.com:
+- **Mục tiêu:** Bảo vệ giao diện React Admin Web và các API khỏi các cuộc tấn công mạng nguy hiểm như SQL Injection, Cross-Site Scripting (XSS), HTTP Flood / DDoS và lọc bot độc hại.
 
-![hosted zone](/images/5-Workshop/5.4-S3-onprem/hosted-zone.png)
+---
 
-2. Tạo 1 record mới trong Private Hosted Zone:
+#### 2. Quy Trình Thực Hiện Chi Tiết
 
-![Create record](/images/5-Workshop/5.4-S3-onprem/create-record1.png)
+##### Bước 1: Khởi tạo AWS WAF Web ACL
+1. Mở **AWS WAF & Shield Console**, chọn mục **Web ACLs** ở menu bên trái.
+2. Resource type: Chọn **Global resources (CloudFront distribution)**.
+3. Bấm **Create web ACL**.
+4. Name: Nhập `tsl-signmap-edge-waf-acl`.
+5. CloudFront distributions to associate: Chọn CloudFront Distribution đã tạo ở bước 5.4.2.
+6. Bấm **Next**.
 
-+ Giữ nguyên Record name và record type
-+ Alias Button: click để enable
-+ Route traffic to: Alias to VPC Endpoint
-+ Region: US East (N. Virginia) [us-east-1]
-+ Chọn endpoint: Paste tên (Regional VPC Endpoint DNS) bạn đã lưu lại ở phần 4.3
+##### Bước 2: Thêm các Managed Rule Sets chống tấn công
+1. Tại mục **Add rules and rule groups**, bấm **Add rules** -> chọn **Add managed rule groups**.
+2. **AWS managed rule groups:**
+   - Bật **Core rule set (CRS):** Bảo vệ các lỗ hổng web phổ biến OWASP Top 10.
+   - Bật **Known bad inputs:** Chặn các request chứa mã độc hại.
+   - Bật **Amazon IP reputation list:** Chặn các địa chỉ IP xấu trong danh sách đen của AWS.
+3. Bấm **Add rules**.
 
-![record1](/images/5-Workshop/5.4-S3-onprem/record1.png)
+##### Bước 3: Thêm Rate-based Rule chống tấn công DDoS / Brute-force
+1. Bấm **Add rules** -> chọn **Add my own rules and rule groups**.
+2. Rule type: Chọn **Rate-based rule**.
+3. Rule name: Nhập `PreventDDoSAndBruteForce`.
+4. Rate limit: Nhập `2000` (giới hạn tối đa 2000 request từ 1 địa chỉ IP trong 5 phút).
+5. Action: Chọn **Block**.
+6. Bấm **Add rule**.
 
-3. Click Add another record, và add 1 cái record thứ 2 sử dụng những thông số sau:
-+ Record name: *.
-+ Record type: giữ giá trị default (type A)
-+ Alias Button: Click để enable
-+ Route traffic to: Alias to VPC Endpoint
-+ Region: US East (N. Virginia) [us-east-1]
-+ Chọn endpoint: Paste tên (Regional VPC Endpoint DNS) bạn đã lưu lại ở phần 4.3
-+ Click **Create records** 
+##### Bước 4: Hoàn tất cấu hình và đính kèm Web ACL
+1. Đặt thứ tự ưu tiên các rules và bấm **Next**.
+2. Metric name: Giữ mặc định để đẩy log giám sát sang **Amazon CloudWatch**.
+3. Bấm **Create web ACL**.
 
-![record 2](/images/5-Workshop/5.4-S3-onprem/record2.png)
+---
 
-Record mới xuất hiện trên giao diện Route 53.
+#### 3. Kiểm Tra & Giám Sát Lưu Lượng Edge
 
-![result](/images/5-Workshop/5.4-S3-onprem/result.png)
+1. Thử nghiệm gửi request giả lập tấn công XSS tới tên miền CloudFront:
+   ```bash
+   curl -I "https://admin.tsl-signmap.com/?q=<script>alert('xss')</script>"
+   ```
+2. **Kết quả:** AWS WAF chặn request và trả về lỗi `HTTP 403 Forbidden`.
 
-#### Tạo một Resolver Forwarding Rule
-
-**Route 53 Resolver Forwarding Rules** cho phép bạn chuyển tiếp các DNS queries từ VPC của bạn đến các nguồn khác để resolve name. Bên ngoài môi trường workshop, bạn có thể sử dụng tính năng này để chuyển tiếp các DNS queries từ VPC của bạn đến các máy chủ DNS chạy trên on-premises. Trong phần này, bạn sẽ mô phỏng một on-premises conditional forwarder bằng cách tạo một forwarding rule để chuyển tiếp các DNS queries for Amazon S3 đến một Private Hosted Zone chạy trong "VPC Cloud" để resolve PrivateLink interface endpoint regional DNS name.
-
-1. Từ giao diện  **Route 53**, chọn **Inbound endpoints** trên thanh bên trái
-
-2. Trong giao diện **Inbound endpoint**, Chọn ID của Inbound endpoint.
-
-![Inbound endpoint](/images/5-Workshop/5.4-S3-onprem/route53-1.png)
-
-3. Sao chép 2 địa chỉ IP trong danh sách vào trình chỉnh sửa.
-
-![Ip addresses](/images/5-Workshop/5.4-S3-onprem/route53-2.png)
-
-4. Từ giao diện Route 53, chọn  **Resolver** > **Rules** và chọn **Create rule**
-
-![Ip addresses](/images/5-Workshop/5.4-S3-onprem/route53-3.png)
-
-5. Trong giao diện **Create rule**
-
-+ Name: myS3Rule
-+ Rule type: Forward
-+ Domain name: s3.us-east-1.amazonaws.com
-
-![create rule](/images/5-Workshop/5.4-S3-onprem/route53-4.png)
-
-+ VPC: VPC On-prem
-+ Outbound endpoint: VPCOnpremOutboundEndpoint
-
-![create rule](/images/5-Workshop/5.4-S3-onprem/route53-5.png)
-
-+ Target IP Addresses: điền cả hai IP bạn đã lưu trữ trên trình soạn thảo (inbound endpoint addresses) và sau đó chọn **Submit**
-
-![create rule](/images/5-Workshop/5.4-S3-onprem/route53-6.png)
-
-Bạn đã tạo thành công resolver forwarding rule. 
-
-![create rule](/images/5-Workshop/5.4-S3-onprem/route53-7.png)
-
-#### Kiểm tra on-premises DNS mô phỏng.
-
-1. Kết nối đến **Test-Interface-Endpoint EC2 instance** với **Session Manager**
-
-![create rule](/images/5-Workshop/5.4-S3-onprem/test1.png)
-
-2. Kiểm tra DNS resolution. Lệnh dig sẽ trả về địa chỉ IP được gán cho VPC endpoint interface đang chạy trên VPC (địa chỉ IP của bạn sẽ khác):
-
-```
-dig +short s3.us-east-1.amazonaws.com 
-```
-{{% notice note %}}
-Các địa chỉ IP được trả về là các địa chỉ IP VPC enpoint, KHÔNG phải là các địa chỉ IP Resolver mà bạn đã dán từ trình chỉnh sửa văn bản của mình. Các địa chỉ IP của  Resolver endpoint  và  VPC endpoin trông giống nhau vì chúng đều từ khối CIDR VPC Cloud.
-{{% /notice %}}
-
-![create rule](/images/5-Workshop/5.4-S3-onprem/dig.png)
-
-3. Truy cập vào menu VPC (phần Endpoints), chọn S3 interface endpoint. Nhấp vào tab Subnets và xác nhận rằng các địa chỉ IP được trả về bởi lệnh Dig khớp với VPC endpoint:
-
-![create rule](/images/5-Workshop/5.4-S3-onprem/subnet.png)
-
-4. Hãy quay lại shell của bạn và sử dụng AWS CLI để kiểm tra danh sách các bucket S3 của bạn:
-
-```
-aws s3 ls --endpoint-url https://s3.us-east-1.amazonaws.com
-```
-
-![create rule](/images/5-Workshop/5.4-S3-onprem/endpoint.png)
-
-5. Kết thúc phiên làm việc của Session Manager của bạn:
-
-![create rule](/images/5-Workshop/5.4-S3-onprem/terminal.png)
-
-
-Trong phần này, bạn đã tạo một  **Interface Endpoint**  cho Amazon S3. Điểm cuối này có thể được truy cập từ on-premises thông qua Site-to-Site VPN hoặc AWS Direct Connect. Các điểm cuối Route 53 Resolver outbound giả lập chuyển tiếp các yêu cầu DNS từ on-premises đến một Private Hosted Zone đang chạy trên đám mây. Các điểm cuối Route 53 inbound nhận yêu cầu giải quyết và trả về một phản hồi chứa địa chỉ IP của  **Interface Endpoint**  VPC. Sử dụng DNS để giải quyết các địa chỉ IP của điểm cuối cung cấp tính sẵn sàng cao trong trường hợp một Availability Zone gặp sự cố.
+3. Mở **Amazon CloudWatch Console** -> chọn **Metrics** -> xem biểu đồ `AllowedRequests` vs `BlockedRequests` để theo dõi lưu lượng truy cập tầng Global Edge theo thời gian thực.

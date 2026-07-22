@@ -6,15 +6,33 @@ chapter : false
 pre : " <b> 5.4. </b> "
 ---
 
-#### Overview
+#### 1. Admin Web Frontend Distribution Layer Overview (CloudFront & S3 Static Web)
 
-+ In this section, you will create an Interface endpoint to access Amazon S3 from a simulated on-premises environment. The Interface endpoint will allow you to route to Amazon S3 over a VPN connection from your simulated on-premises environment.
+In this section, you will deploy the global distribution infrastructure for the React Admin Web (`ADMIN.WEB`) frontend of the **TSL-SignMap** system at the **Global Edge Layer**, adhering to AWS security and performance best practices:
 
-+ Why using **Interface endpoint**: 
-    + Gateway endpoints only work with resources running in the VPC where they are created. Interface endpoints work with resources running in VPC, and also resources running in on-premises environments. Connectivty from your on-premises environment to the cloud can be provided by AWS Site-to-Site VPN or AWS Direct Connect.
-    + Interface endpoints allow you to connect to services powered by AWS PrivateLink. These services include some AWS services, services hosted by other AWS customers and partners in their own VPCs (referred to as PrivateLink Endpoint Services), and supported AWS Marketplace Partner services. For this workshop, we will focus on connecting to Amazon S3.
+- **AWS Simple Storage Service (S3 Static Web):** Stores compiled frontend static assets (`dist/`) including HTML, CSS, JavaScript, and user interface media.
+- **AWS CloudFront (CDN):** Global Content Delivery Network caching and delivering static assets from the S3 Static Web Bucket to end users with low latency under `< 100ms`.
+- **AWS Certificate Manager (ACM):** Issues and manages SSL/TLS security certificates enabling HTTPS connection encryption (Port 443).
+- **AWS WAF (Web Application Firewall):** Edge-located web application firewall protecting the site against web exploits (DDoS, SQL Injection, Cross-Site Scripting).
 
-![Interface endpoint architecture](/images/5-Workshop/5.4-S3-onprem/diagram3.png)
+- **Static Web Endpoint URL (AWS S3 Hosting):** [http://tsl-signmap-production-static-web-ckroy7.s3-website-ap-southeast-1.amazonaws.com/](http://tsl-signmap-production-static-web-ckroy7.s3-website-ap-southeast-1.amazonaws.com/)
 
+---
 
+#### 2. Detailed Edge Layer Components
 
+| AWS Service | Role & Function | Configuration & Protocols |
+| :--- | :--- | :--- |
+| **AWS S3 Static Web** | Stores React Admin Web compiled static assets (`dist/`) | S3 Website Hosting Bucket |
+| **AWS CloudFront** | Global CDN delivering static content with page load `< 100ms` | Price Class 100 / HTTPS (Port 443) |
+| **AWS Certificate Manager (ACM)** | Provides SSL/TLS certificates for HTTPS encryption | TLS Certificate (Region us-east-1) |
+| **AWS WAF** | Filters web traffic blocking malicious exploits at Global Edge | Managed Rule Sets & Rate Limiting |
+
+---
+
+#### 3. Hands-on Lab Exercises
+
+- [5.4.1 Prepare Frontend Static Assets & Create S3 Static Web Bucket](5.4.1-prepare/)
+- [5.4.2 Configure AWS CloudFront CDN & Origin Access Control (OAC)](5.4.2-create-interface-enpoint/)
+- [5.4.3 Integrate SSL HTTPS Certificate with AWS Certificate Manager (ACM)](5.4.3-test-endpoint/)
+- [5.4.4 Configure AWS WAF Firewall & Edge Monitoring](5.4.4-dns-simulation/)

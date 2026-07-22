@@ -1,43 +1,73 @@
 ---
-title : "Create an S3 Interface endpoint"
-date : 2024-01-01
+title : "Configure AWS CloudFront CDN & Origin Access Control (OAC)"
+date : 2026-07-22 
 weight : 2
 chapter : false
 pre : " <b> 5.4.2 </b> "
 ---
 
-In this section you will create and test an S3 interface endpoint using the simulated on-premises environment deployed as part of this workshop.
+#### 1. Step 5.4.2 Overview
 
-1. Return to the Amazon VPC menu. In the navigation pane, choose Endpoints, then click Create Endpoint.
+In this step, you will configure an **AWS CloudFront Distribution** at the **Global Edge Services** layer connecting to the **S3 Static Web Bucket (`tsl-signmap-production-static-web-ckroy7`)**.
 
-2. In Create endpoint console:
-+ Name the interface endpoint
-+ In Service category, choose **aws services** 
+- **Goal:** Accelerate React Admin Web asset delivery globally under `< 100ms` and enforce security using **Origin Access Control (OAC)** restricting access strictly through CloudFront CDN.
 
-![name](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint1.png)
+---
 
-3.  In the Search box, type S3 and press Enter. Select the endpoint named com.amazonaws.us-east-1.s3. Ensure that the Type column indicates Interface.
+#### 2. Step-by-Step Implementation
 
-![service](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint2.png)
+##### Step 1: Create CloudFront Distribution
+1. Open **AWS CloudFront Console** and click **Create distribution**.
+2. **Origin domain:** Select S3 Bucket `tsl-signmap-production-static-web-ckroy7.s3.ap-southeast-1.amazonaws.com`.
+3. **Origin access:**
+   - Select **Origin access control settings (recommended)**.
+   - Click **Create control setting**, retain defaults and click **Create**.
+4. **Default cache behavior:**
+   - Viewer protocol policy: Select **Redirect HTTP to HTTPS**.
+   - Allowed HTTP methods: Select `GET, HEAD`.
+   - Cache key and origin requests: Select **CachingOptimized** (recommended static asset caching policy).
+5. **Price class:** Select **Use all edge locations (best performance)** or Price Class 100.
+6. Default root object: Enter `index.html`.
+7. Click **Create distribution**.
 
-4. For VPC, select VPC Cloud from the drop-down.
-{{% notice warning %}}
-Make sure to choose "VPC Cloud" and not "VPC On-prem"
-{{% /notice %}}
-+ Expand **Additional settings** and ensure that Enable DNS name is *not* selected (we will use this in the next part of the workshop)
+##### Step 2: Update S3 Bucket Policy with OAC
+1. Once Distribution creation completes, copy the generated JSON **S3 Bucket Policy**.
+2. Open **AWS S3 Console** -> select bucket `tsl-signmap-production-static-web-ckroy7` -> select **Permissions** tab.
+3. Under **Bucket policy**, click **Edit** and paste JSON:
+   ```json
+   {
+       "Version": "2012-10-17",
+       "Statement": {
+           "Sid": "AllowCloudFrontServicePrincipalReadOnly",
+           "Effect": "Allow",
+           "Principal": {
+               "Service": "cloudfront.amazonaws.com"
+           },
+           "Action": "s3:GetObject",
+           "Resource": "arn:aws:s3:::tsl-signmap-production-static-web-ckroy7/*",
+           "Condition": {
+               "StringEquals": {
+                   "AWS:SourceArn": "arn:aws:cloudfront::<account_id>:distribution/<distribution_id>"
+               }
+           }
+       }
+   }
+   ```
+4. Click **Save changes**.
 
-![vpc](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint3.png)
+##### Step 3: Configure Custom Error Responses for React SPA Routing
+To prevent `404 Not Found` errors when users reload deep client routes in React Router (e.g. `/admin/signs`, `/admin/users`):
+1. In CloudFront Distribution -> select **Error pages** tab -> click **Create custom error response**.
+2. HTTP error code: Select **404: Not Found**.
+3. Customize error response: Select **Yes**.
+4. Response page path: Enter `/index.html`.
+5. HTTP response code: Select **200: OK**.
+6. Click **Create custom error response**.
 
-5. Select 2 subnets in the following AZs: us-east-1a and us-east-1b
+---
 
-![subnets](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint4.png)
+#### 3. Verification
 
-6. For Security group, choose SGforS3Endpoint:
-
-![sg](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint5.png)
-
-7. Keep the default policy - full access and click Create endpoint
-
-![success](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint-success.png)
-
-Congratulation on successfully creating S3 interface endpoint. In the next step, we will test the interface endpoint.
+1. Copy the CloudFront Domain Name (e.g. `d123456789.cloudfront.net`).
+2. Open browser and navigate to: `https://d123456789.cloudfront.net`
+3. Verify application loads successfully over secure HTTPS with response latency under `< 100ms`.

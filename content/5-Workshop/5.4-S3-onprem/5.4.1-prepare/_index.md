@@ -1,57 +1,62 @@
 ---
-title : "Prepare the environment"
-date : 2024-01-01
+title : "Prepare Frontend Static Assets & Create S3 Static Web Bucket"
+date : 2026-07-22 
 weight : 1
 chapter : false
 pre : " <b> 5.4.1 </b> "
 ---
 
-To prepare for this part of the workshop you will need to:
-+ Deploying a CloudFormation stack 
-+ Modifying a VPC route table. 
+#### 1. Step 5.4.1 Overview
 
-These components work together to simulate on-premises DNS forwarding and name resolution.
+In this step, you will build and package the **TSL-SignMap** system **React Admin Web (`ADMIN.WEB`)** frontend application and provision an **AWS S3 Bucket** configured for **Static Website Hosting**.
 
-#### Deploy the CloudFormation stack
+- **S3 Bucket Name:** `tsl-signmap-production-static-web-ckroy7`
+- **Region:** Singapore (`ap-southeast-1`)
+- **Website Endpoint URL:** [http://tsl-signmap-production-static-web-ckroy7.s3-website-ap-southeast-1.amazonaws.com/](http://tsl-signmap-production-static-web-ckroy7.s3-website-ap-southeast-1.amazonaws.com/)
 
-The CloudFormation template will create additional services to support an on-premises simulation:
-+ One Route 53 Private Hosted Zone that hosts Alias records for the PrivateLink S3 endpoint
-+ One Route 53 Inbound Resolver endpoint that enables "VPC Cloud" to resolve inbound DNS resolution requests to the Private Hosted Zone
-+ One Route 53 Outbound Resolver endpoint that enables "VPC On-prem" to forward DNS requests for S3 to "VPC Cloud"
+---
 
-![route 53 diagram](/images/5-Workshop/5.4-S3-onprem/route53.png)
+#### 2. Step-by-Step Implementation
 
-1. Click the following link to open the [AWS CloudFormation console](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.amazonaws.com/reinvent-endpoints-builders-session/R53CF.yaml&stackName=PLOnpremSetup). The required template will be pre-loaded into the menu. Accept all default and click Create stack.
+##### Step 1: Build React Admin Web Frontend
+1. Open terminal inside the React frontend repository directory and run build packaging:
+   ```bash
+   npm run build
+   ```
+2. The compiled static output directory `dist/` is generated containing `index.html`, JavaScript bundles, CSS stylesheets, and UI media assets.
 
-![Create stack](/images/5-Workshop/5.4-S3-onprem/create-stack.png)
+##### Step 2: Create AWS S3 Bucket
+1. Open **AWS S3 Console** and click **Create bucket**.
+2. Bucket name: Enter `tsl-signmap-production-static-web-ckroy7`.
+3. AWS Region: Select `ap-southeast-1` (Singapore).
+4. Object Ownership: Select **ACLs disabled (recommended)**.
+5. Block Public Access settings:
+   - Retain default block public access settings to prepare for CloudFront Origin Access Control (OAC) setup in the next exercise.
+6. Click **Create bucket**.
 
-![Button](/images/5-Workshop/5.4-S3-onprem/create-stack-button.png)
+##### Step 3: Configure S3 Static Website Hosting
+1. Click bucket name `tsl-signmap-production-static-web-ckroy7` -> select **Properties** tab.
+2. Scroll to **Static website hosting** section and click **Edit**.
+3. Select **Enable**.
+4. Hosting type: Select **Host a static website**.
+5. Index document: Enter `index.html`.
+6. Error document: Enter `index.html` (supporting Single Page Application React Router client-side routing).
+7. Click **Save changes**.
 
-It may take a few minutes for stack deployment to complete. You can continue with the next step without waiting for the deployemnt to finish.
+##### Step 4: Upload Static Assets to S3 Bucket
+1. Select **Objects** tab inside S3 Bucket -> click **Upload**.
+2. Upload all files and subfolders inside `dist/` into the S3 Bucket:
+   ```bash
+   aws s3 sync ./dist s3://tsl-signmap-production-static-web-ckroy7/
+   ```
+3. Click **Upload** and confirm completion.
 
-#### Update on-premise private route table
+---
 
-This workshop uses a strongSwan VPN running on an EC2 instance to simulate connectivty between an on-premises datacenter and the AWS cloud. Most of the required components are provisioned before your start. To finalize the VPN configuration, you will modify the "VPC On-prem" routing table to direct traffic destined for the cloud to the strongSwan VPN instance.
+#### 3. Verification
 
-1. Open the Amazon EC2 console 
-
-2. Select the instance named infra-vpngw-test. From the Details tab, copy the Instance ID and paste this into your text editor
-
-![ec2 id](/images/5-Workshop/5.4-S3-onprem/ec2-onprem-id.png)
-
-3. Navigate to the VPC menu by using the Search box at the top of the browser window.
-
-4. Click on Route Tables, select the RT Private On-prem route table, select the Routes tab, and click Edit Routes.
-
-![rt](/images/5-Workshop/5.4-S3-onprem/rt.png)
-
-5. Click Add route.
-+ Destination: your Cloud VPC cidr range
-+ Target: ID of your infra-vpngw-test instance (you saved in your editor at step 1)
-
-![add route](/images/5-Workshop/5.4-S3-onprem/add-route.png)
-
-6. Click Save changes
-
-
-
+Once upload completes, verify the static website endpoint:
+```text
+http://tsl-signmap-production-static-web-ckroy7.s3-website-ap-southeast-1.amazonaws.com/
+```
+The React Admin Web application launches successfully and is prepared for CloudFront CDN distribution in step 5.4.2.

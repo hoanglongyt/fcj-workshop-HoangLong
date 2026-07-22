@@ -1,59 +1,53 @@
 ---
-title : "Test the Interface Endpoint"
-date : 2024-01-01
+title : "Integrate SSL HTTPS Certificate with AWS Certificate Manager (ACM)"
+date : 2026-07-22 
 weight : 3
 chapter : false
 pre : " <b> 5.4.3 </b> "
 ---
 
-#### Get the regional DNS name of S3 interface endpoint
-1. From the Amazon VPC menu, choose Endpoints.
+#### 1. Step 5.4.3 Overview
 
-2. Click the name of newly created endpoint: s3-interface-endpoint. Click details and save the regional DNS name of the endpoint (the first one) to your text-editor for later use. 
+In this step, you will integrate a free **SSL/TLS certificate from AWS Certificate Manager (ACM)** into your **CloudFront CDN** distribution to guarantee end-to-end HTTPS (Port 443) encryption for the **TSL-SignMap React Admin Web** application.
 
-![dns name](/images/5-Workshop/5.4-S3-onprem/dns.png)
+- **Note:** ACM certificates used by CloudFront CDN distributions must be requested exclusively in the **us-east-1 (N. Virginia)** AWS Region.
 
+---
 
-#### Connect to EC2 instance in "VPC On-prem"
+#### 2. Step-by-Step Implementation
 
-1. Navigate to **Session manager** by typing "session manager" in the search box 
+##### Step 1: Request SSL/TLS Certificate in AWS Certificate Manager (ACM)
+1. Open **AWS Certificate Manager Console**, and switch Region in the top right to **us-east-1 (N. Virginia)**.
+2. Click **Request a certificate** -> select **Request a public certificate** -> click **Next**.
+3. Fully qualified domain name: Enter application domain name (e.g. `admin.tsl-signmap.com` or `*.tsl-signmap.com`).
+4. Validation method: Select **DNS validation (recommended)**.
+5. Key algorithm: Select **RSA 2048**.
+6. Click **Request**.
 
-2. Click **Start Session**, and select the EC2 instance named **Test-Interface-Endpoint**. This EC2 instance is running in "VPC On-prem" and will be used to test connectivty to Amazon S3 through the Interface endpoint we just created. Session Manager will open a new browser tab with a shell prompt: **sh-4.2 $**
+##### Step 2: Validate Domain Ownership via Amazon Route 53
+1. Click the created certificate entry inside the ACM console list.
+2. Under **Domains** section, click **Create records in Route 53**.
+3. The system automatically creates the validation CNAME record inside your Amazon Route 53 Hosted Zone.
+4. Wait 1 - 3 minutes until certificate status updates to **Issued**.
 
-![Start session](/images/5-Workshop/5.4-S3-onprem/start-session.png)
+##### Step 3: Attach ACM Certificate to CloudFront Distribution
+1. Switch to **AWS CloudFront Console**, and select your distribution.
+2. Under **General** tab, scroll to **Settings** -> click **Edit**.
+3. **Alternate domain name (CNAME):** Enter `admin.tsl-signmap.com`.
+4. **Custom SSL certificate:** Select the issued ACM certificate (`admin.tsl-signmap.com`).
+5. Minimum TLS version: Select **TLSv1.2_2021 (recommended)**.
+6. Click **Save changes**.
 
-3. Change to the ssm-user's home directory with command "cd ~"
+---
 
-4. Create a file named testfile2.xyz
-```
-fallocate -l 1G testfile2.xyz
-```
+#### 3. Security Verification
 
-![user](/images/5-Workshop/5.4-S3-onprem/cli1.png)
-
-
-5. Copy file to the same S3 bucket we created in section 3.2
-
-```
-aws s3 cp --endpoint-url https://bucket.<Regional-DNS-Name> testfile2.xyz s3://<your-bucket-name>
-``` 
-+ This command requires the --endpoint-url parameter, because you need to use the endpoint-specific DNS name to access S3 using an Interface endpoint.
-+ Do not include the leading ' * ' when copying/pasting the regional DNS name.
-+ Provide your S3 bucket name created earlier
-
-![copy file](/images/5-Workshop/5.4-S3-onprem/cli2.png)
-
-
-Now the file has been added to your S3 bucket. Let check your S3 bucket in the next step.
-
-#### Check Object in S3 bucket
-
-1. Navigate to S3 console
-2. Click Buckets
-3. Click the name of your bucket and you will see testfile2.xyz has been added to your bucket
-
-![check bucket](/images/5-Workshop/5.4-S3-onprem/check-bucket.png)
-
-
-
-
+1. Open terminal and issue a cURL command against the custom domain:
+   ```bash
+   curl -I https://admin.tsl-signmap.com
+   ```
+2. Response returns secure HTTP headers:
+   - `HTTP/2 200`
+   - `Server: CloudFront`
+   - `X-Cache: Hit from cloudfront`
+   - Secure padlock icon displays in browser address bar verifying HTTPS connection.
