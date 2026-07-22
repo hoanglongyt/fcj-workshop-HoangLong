@@ -25,7 +25,7 @@ Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, tuân t
 | 6   | **Tính cầu tiến**                   | Sẵn sàng nhận feedback và cải thiện bản thân                                                     | ☐   | ✅   | ☐          |
 | 7   | **Giao tiếp**                       | Báo cáo công việc rõ ràng, cải thiện phần giải thích kiến trúc và workflow song ngữ                                                     | ☐   | ✅   | ☐          |
 | 8   | **Hợp tác nhóm**                    | Làm việc hiệu quả với đồng nghiệp, tham gia nhóm                                                 | ✅   | ☐   | ☐          |
-| 9   | **Ứng xử chuyên nghiệp**            | Không sao chép nội dung mẫu và đánh dấu rõ bằng chứng còn thiếuviệc                                              | ✅   | ☐   | ☐          |
+| 9   | **Ứng xử chuyên nghiệp**            | Không sao chép nội dung mẫu và đánh dấu rõ bằng chứng còn thiếu việc                                              | ✅   | ☐   | ☐          |
 | 10  | **Tư duy giải quyết vấn đề**        | Kết nối requirement của dự án với các thành phần AWS có thể deploy                                                    | ☐   | ✅   | ☐          |
 | 11  | **Đóng góp vào dự án/tổ chức**      | Chuẩn bị nội dung báo cáo, hình kiến trúc                                     | ☐   | ✅   | ☐          |
 | 12  | **Tổng thể**                        | Hướng dự án đã rõ, nhưng còn thiếu ảnh AWS cuối và link blog đã đăng                                                   | ✅   | ☐   | ☐          |
