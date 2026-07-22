@@ -1,115 +1,120 @@
 ---
 title: "Proposal"
-date: 2024-01-01
+date: 2026-06-30
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
-
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+# TSL-SignMap
+## AI-Integrated & Community-Driven Traffic Sign Location Management System
 
 ### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+TSL-SignMap is an innovative technological solution designed to build and maintain a real-time traffic sign database in Vietnam. The system integrates a user-friendly mobile application, open-source mapping services (OpenStreetMap), advanced Computer Vision (YOLO AI models for traffic sign detection and classification), and a crowdsourced data collection model. Featuring a tokenized economy (TSL Coin) and a multi-tiered reputation-based consensus and voting process, TSL-SignMap ensures data integrity, transparency, and accuracy, helping drivers navigate safely while supporting road authorities in efficient traffic management.
 
-### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
+---
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+### 2. Problem Statement & Proposed Solution
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+#### What’s the Problem?
+- **Outdated Traffic Data**: Traffic signs in Vietnam are constantly changing (newly added, relocated, obstructed, or removed), yet updates rely heavily on manual surveys that are costly and time-consuming.
+- **Suboptimal Existing Mapping Apps**: Standard navigation tools often lack granular traffic sign data or fail to reflect recent regulatory sign updates along specific routes promptly.
+- **Traffic Safety Risks**: The absence of timely and accurate traffic sign information increases the risk of unintentional traffic violations and compromised road safety for commuters.
 
-### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
+#### The Solution (TSL-SignMap)
+TSL-SignMap addresses these challenges through a collaborative smart ecosystem:
+- **Real-Time Mobile Application**: Integrated with OpenStreetMap to display real-time traffic sign locations directly on an interactive map.
+- **Community Crowdsourcing**: Drivers and local residents can report missing, inaccurate, or newly added traffic signs.
+- **AI-Powered Detection & Classification**: Cutting-edge computer vision models (YOLO) automatically detect and classify traffic signs from user-uploaded images, minimizing manual verification effort.
+- **Weighted Voting Consensus**: Validates user contributions based on upvotes/downvotes weighted by user reputation, spatial proximity (GPS distance), and expertise.
+- **TSL Coin Economy**: Incentivizes active and high-quality community participation through a transparent coin reward and penalty system.
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+---
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+### 3. Functional Requirements
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+#### a. User Registration & Authentication
+- Secure registration and authentication for mobile users.
+- Initial welcome bonus of 20 TSL Coins upon account creation.
+- Reputation score management and TSL Coin balance tracking.
 
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+#### b. Traffic Sign Display & Navigation
+- Real-time map display powered by OpenStreetMap showing categorized traffic signs (regulatory, warning, mandatory, and informational signs).
 
-### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
+#### c. Search & Advanced Filtering
+- Search traffic signs by type or proximity radius.
+- Advanced filtering capabilities costing 1 TSL Coin per query.
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+#### d. User Contributions
+- Submit updates (new, missing, or incorrect signs) with GPS coordinates and optional descriptions/photos.
+- Contribution submission fee: 5 TSL Coins.
+- Uploaded photos are automatically scanned by the YOLO AI pipeline for validation and preliminary classification.
+
+#### e. Voting Mechanism & Community Verification
+- Qualified users (meeting minimum activity thresholds) can cast upvotes or downvotes on pending contributions.
+- Earn 1 TSL Coin per matching vote (up to 5 TSL Coins/day).
+- **Automated Verification Rules**:
+  - Over 70% consensus (after 5+ votes or 7 days): Automatically approved and integrated into the database.
+  - Under 30% consensus: Automatically rejected.
+  - 30% - 70% consensus: Flagged for administrator review.
+
+#### f. Administrator Web Dashboard
+- Web-based dashboard for administrators to review flagged contributions, approve/reject submissions, and override votes if necessary.
+- Adjust reward/penalty parameters and user reputation scores to maintain ecosystem balance.
+
+#### g. TSL Coin Economic Lifecycle
+- **Rewards**: 10+ TSL Coins for approved contributions; 1 TSL Coin for matching votes.
+- **Expenditures**: Spend coins on map access (2 TSL Coins/day), contribution submission (5 TSL Coins), or advanced filters (1 TSL Coin).
+- **Top-up**: Users can top up TSL Coins with fiat currency (e.g., $1 for 10 TSL Coins).
+
+---
+
+### 4. System Architecture & Technology Stack
+
+#### Architecture Overview
+- **Mobile Client**: Developed with Flutter / React Native, featuring an OpenStreetMap interface (MapLibre GL / Leaflet).
+- **AI Processing Pipeline**: YOLO (You Only Look Once) model trained on Vietnamese traffic sign datasets for real-time object detection and classification.
+- **Backend Services**: RESTful API & WebSocket Server (Node.js / Python FastAPI) for real-time synchronization.
+- **Database Layer**: PostgreSQL + PostGIS (spatial database for sign locations), Redis (caching & leaderboard), Amazon S3 / Cloud Storage (image storage).
+- **Admin Web Dashboard**: Built with React.js / Next.js.
+
+---
 
 ### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
 
-### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
+- **Month 1: Data Collection & AI Model Training**
+  - Gather dataset of Vietnamese traffic sign images.
+  - Train and evaluate YOLO models for sign detection and classification.
+  - Design spatial database schemas (PostGIS) and API contracts.
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
+- **Month 2: Core Platform Development & Token Economy**
+  - Develop mobile application with OpenStreetMap integration.
+  - Implement weighted voting algorithm and TSL Coin balance management.
+  - Integrate AI pipeline for automated submission validation.
 
-Total: $0.7/month, $8.40/12 months
+- **Month 3: Admin Dashboard & End-to-End Testing**
+  - Build Admin Web Dashboard.
+  - Conduct thorough testing (End-to-End Testing), optimizing AI recognition accuracy and map synchronization stability.
 
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+- **Month 4 Onward: Community Pilot & Deployment**
+  - Launch community pilot in key cities (e.g., Ho Chi Minh City / Hanoi).
+  - Collect user feedback, fine-tune consensus algorithms, and scale system capacity.
 
-### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
+---
 
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
+### 6. Risk Assessment & Mitigation Strategies
 
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+| Risk | Impact | Probability | Mitigation Strategy |
+| :--- | :--- | :--- | :--- |
+| Spam Reports / False Submissions | High | Medium | Require 5 TSL Coins submission fee, filter invalid photos via AI, weight votes by GPS distance and reputation. |
+| TSL Coin Fraud (Sybil Attack) | Medium | Medium | User identity verification, cap daily voting rewards (max 5 Coins/day), penalize reputation score for bad behavior. |
+| AI Misclassification | Medium | Low | Use AI for preliminary screening; rely on community consensus and Admin overrides for final approval. |
+| Offline / Weak Network Connection | Low | Medium | Provide offline storage on mobile devices and auto-sync when network connection is restored. |
 
-### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+---
+
+### 7. Expected Outcomes
+
+- **Real-Time Traffic Sign Database**: Provides drivers with an accurate, continuously updated traffic sign map for safer navigation.
+- **Cost Reduction**: Cuts manual survey and maintenance costs for transport authorities by up to 80%.
+- **Community Engagement**: Fosters a collaborative road-safety ecosystem through transparent and rewarding TSL Coin mechanics.
