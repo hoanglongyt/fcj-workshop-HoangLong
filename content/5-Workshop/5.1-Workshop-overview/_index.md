@@ -30,24 +30,26 @@ The system provides centralized traffic sign management, enabling users to searc
 
 ---
 
-#### 3. 3-Tier Multi-AZ VPC Architecture
+#### 3. Multi-AZ VPC Architecture
 
-- **AWS Region:** Singapore (`ap-southeast-1`)
-- **AWS VPC CIDR:** `10.0.0.0/16`
-- **Subnet Layers across Multi-AZ (AZ-A & AZ-B):**
-  1. **Public Subnet (`10.0.1.0/24`):** Hosts AWS Application Load Balancer (ALB) and NAT Gateways.
-  2. **Private App Subnet (`10.0.2.0/24`):** Hosts AWS EC2 Instances running 8 Microservices:
-     - `ApiGateway Container` (Port 5008 - Ocelot API Gateway)
-     - `UserService` (Port 5001)
-     - `TrafficSignService` (Port 5002)
-     - `ContributionService` (Port 5003)
-     - `FeedbackService` (Port 5004)
-     - `PaymentService` (Port 5005)
-     - `RewardService` (Port 5006)
-     - `NotificationService` (Port 5007)
-     - `EC2 Scraper Instance` (`scrape_signs.py`)
-     - `AWS Cloud Map` (Service Discovery) & `SageMaker AI Endpoint` (YOLO AI model)
-  3. **Private DB Subnet (`10.0.3.0/24`):** Hosts AWS RDS for SQL Server 2022 (Port 1433) Primary - Standby setup and Amazon ElastiCache (Redis).
+- **Infrastructure Scope:** AWS Region Singapore (`ap-southeast-1`) with **AWS VPC (`10.0.0.0/16`)** deployed across 2 Availability Zones (**AZ - A** and **AZ - B**).
+- **Subnet Layer Segmentation based on Architecture Diagram:**
+  1. **Public Subnet Tier (Public Subnet A & Public Subnet B):**
+     - Receives inbound traffic from **Internet Gateway (5)** into **AWS Application Load Balancer (ALB) (6)** distributing requests to Target Group.
+     - Hosts **NAT Gateways** in each AZ enabling private workloads to initiate outbound internet connections (e.g. scraping OpenStreetMap API).
+  2. **Private App Subnet Tier (Private Subnet A & Private Subnet B):**
+     - Deployed within an **Auto Scaling Group** spanning AZ-A and AZ-B.
+     - **Private Subnet A (AZ-A):** Hosts `EC2 Ocelot API Gateway + 7 Microservices Containers` and `EC2 Scraper Instance (11)`.
+     - **Private Subnet B (AZ-B):** Hosts redundant `EC2 Ocelot API Gateway + 7 Microservices Containers`.
+     - **Private VPC Endpoint Integrations:**
+       - Connected to **SageMaker (YOLO AI)** via **SageMaker VPC Endpoint (9)**.
+       - Connected to **S3 Media Bucket** via **S3 VPC Endpoint (10)**.
+       - Connected to **Amazon ElastiCache (Redis)** cache cluster.
+  3. **Private DB Subnet Tier (Private DB Sub A & Private DB Sub B):**
+     - **Private DB Sub A (AZ-A):** Hosts **RDS Primary - SQL** (SQL Server 2022) handling data queries from EC2 Microservices and EC2 Scraper.
+     - **Private DB Sub B (AZ-B):** Hosts **RDS Standby** for continuous Multi-AZ synchronous replication and high-availability failover.
+  4. **Secondary Disaster Recovery Region (12):**
+     - Synchronizes cross-region backup data including `S3 Bucket`, `AWS Backup`, and `RDS Backup`.
 
 ---
 

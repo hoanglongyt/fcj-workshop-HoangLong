@@ -30,24 +30,26 @@ Hệ thống được phát triển nhằm giải quyết bài toán quản lý 
 
 ---
 
-#### 3. Cấu trúc Phân Mạng VPC 3-Tier (VPC Architecture)
+#### 3. Cấu trúc Phân Mạng VPC Multi-AZ (VPC Architecture)
 
-- **AWS Region:** Singapore (`ap-southeast-1`)
-- **AWS VPC CIDR:** `10.0.0.0/16`
-- **Các phân vùng Subnet Multi-AZ (AZ-A & AZ-B):**
-  1. **Public Subnet (`10.0.1.0/24`):** Chứa AWS Application Load Balancer (ALB) nhận traffic công cộng và các NAT Gateway.
-  2. **Private App Subnet (`10.0.2.0/24`):** Chứa các cụm máy chủ AWS EC2 Instances gồm 8 Microservices:
-     - `ApiGateway Container` (Port 5008 - Ocelot API Gateway)
-     - `UserService` (Port 5001)
-     - `TrafficSignService` (Port 5002)
-     - `ContributionService` (Port 5003)
-     - `FeedbackService` (Port 5004)
-     - `PaymentService` (Port 5005)
-     - `RewardService` (Port 5006)
-     - `NotificationService` (Port 5007)
-     - `EC2 Scraper Instance` (`scrape_signs.py`)
-     - `AWS Cloud Map` (Service Discovery) & `SageMaker AI Endpoint` (YOLO AI model)
-  3. **Private DB Subnet (`10.0.3.0/24`):** Chứa CSDL AWS RDS for SQL Server 2022 (Port 1433) mô hình Primary - Standby và cụm cache Amazon ElastiCache (Redis).
+- **Phạm vi hạ tầng:** AWS Region Singapore (`ap-southeast-1`) với dải mạng **AWS VPC (`10.0.0.0/16`)** triển khai trên 2 Availability Zones (**AZ - A** và **AZ - B**).
+- **Phân chia các phân vùng Subnet chi tiết theo sơ đồ:**
+  1. **Tầng Public Subnet (Public Subnet A & Public Subnet B):**
+     - Tiếp nhận lưu lượng từ **Internet Gateway (5)** vào **AWS Application Load Balancer (ALB) (6)** để cân bằng tải đến Target Group.
+     - Chứa các **NAT Gateway** tại từng AZ giúp các tài nguyên ở Private Subnet truy cập chiều ra ngoài Internet (như cào dữ liệu từ OpenStreetMap API).
+  2. **Tầng Private App Subnet (Private Subnet A & Private Subnet B):**
+     - Nằm trong cụm **Auto Scaling Group** tự động mở rộng linh hoạt spanning qua AZ-A và AZ-B.
+     - **Private Subnet A (AZ-A):** Chứa máy chủ `EC2 Ocelot API Gateway + 7 Microservices Containers` và `EC2 Scraper Instance (11)`.
+     - **Private Subnet B (AZ-B):** Chứa cụm máy chủ `EC2 Ocelot API Gateway + 7 Microservices Containers` dự phòng cao.
+     - **Tích hợp Điểm cuối Dịch vụ (VPC Endpoints):**
+       - Kết nối với **SageMaker (YOLO AI)** qua **SageMaker VPC Endpoint (9)**.
+       - Kết nối với **S3 Media Bucket** qua **S3 VPC Endpoint (10)**.
+       - Kết nối với bộ nhớ đệm **Amazon ElastiCache (Redis)**.
+  3. **Tầng Private DB Subnet (Private DB Sub A & Private DB Sub B):**
+     - **Private DB Sub A (AZ-A):** Chứa **RDS Primary - SQL** (SQL Server 2022) xử lý truy vấn dữ liệu từ EC2 Microservices và EC2 Scraper Instance.
+     - **Private DB Sub B (AZ-B):** Chứa **RDS Standby** đồng bộ dữ liệu liên tục (Multi-AZ synchronous replication) sẵn sàng tự động chuyển vùng khi có sự cố.
+  4. **Vùng Phục Hồi Thảm Họa (Secondary Disaster Recovery Region) (12):**
+     - Đồng bộ lưu trữ và sao lưu dữ liệu gồm `S3 Bucket`, `AWS Backup` và `RDS Backup`.
 
 ---
 
