@@ -1,5 +1,5 @@
 ---
-title : "Prerequisites & VPC Network Setup"
+title : "Prerequisites and 3-Tier VPC Subnet Setup"
 date : 2026-07-22 
 weight : 2
 chapter : false

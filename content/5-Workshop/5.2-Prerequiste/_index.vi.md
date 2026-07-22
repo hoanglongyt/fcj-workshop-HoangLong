@@ -1,5 +1,5 @@
 ---
-title : "Các bước chuẩn bị & Phân chia mạng VPC"
+title : "Chuẩn bị và Phân chia mạng VPC 3-Tier"
 date : 2026-07-22 
 weight : 2
 chapter : false
