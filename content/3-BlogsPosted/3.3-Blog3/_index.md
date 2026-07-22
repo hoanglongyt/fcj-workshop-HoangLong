@@ -1,31 +1,63 @@
 ---
 title: "Blog 3"
-date: 2024-01-01
+date: 2026-06-30
 weight: 1
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# SESSION POLICIES IN AMAZON EKS POD IDENTITY
+# AMAZON BEDROCK GUARDRAILS - ENTERPRISE SAFETY AND PRIVACY FOR GENERATIVE AI APPLICATIONS
 
-Amazon EKS Pod Identity has recently added the session policies feature, allowing you to narrow IAM permissions flexibly and precisely for each pod without needing to create many separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+Amazon Bedrock Guardrails provides multi-layered safety controls for Generative AI applications, enabling enterprises to implement customized safeguards aligned with organizational security policies and compliance requirements.
 
-Key points to know:
+### Key points to know:
 
-* A session policy is an inline IAM policy specified when creating or updating a Pod Identity association.
-* Effective permissions = intersection between the IAM role permissions and the session policy → the session policy can only narrow permissions, not expand them.
-* Helps avoid over-permissioning when reusing a single IAM role for multiple workloads with different needs.
-* Supports both same-account and cross-account (via IAM role chaining).
-* Significantly reduces the number of IAM roles that need to be managed, helping avoid hitting IAM quota limits in large clusters.
-* Easily configured through the AWS Management Console, AWS CLI, or AWS SDK when creating an association between a Kubernetes ServiceAccount and an IAM role.
+* **Content & Denied Topic Filtering**: Automatically detects and blocks prompts or responses containing hate speech, sensitive content, or restricted business topics.
+* **PII Redaction & Privacy**: Identifies and masks Personally Identifiable Information (PII) such as emails, phone numbers, credit cards, or national IDs during AI interactions.
+* **Prompt Injection & Jailbreak Protection**: Strengthens defenses against malicious prompt injection and jailbreaking attempts targeting Foundation Models.
+* **Model-Agnostic Application**: Guardrails can be consistently applied across multiple Foundation Models in Amazon Bedrock without reconfiguring safety rules for each individual model.
 
-This feature is especially useful when you have many applications running on the same IAM role but need different permission restrictions (for example: one pod only reads a specific S3 bucket, another pod only calls certain APIs).
+---
 
-...Image...
+### Facebook Post Link
+- **Post Link**: [https://www.facebook.com/groups/awsstudygroupfcj/permalink/2220585502039743/#](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2220585502039743/#)
 
-...Link...
+---
 
-...Guide...
+### Step-by-Step Guide: Deploying Amazon Bedrock Guardrails
+
+#### 1. Create a Guardrail via AWS CLI
+Define denied topics and sensitive PII masking policies:
+
+```bash
+aws bedrock create-guardrail \
+  --name "enterprise-ai-guardrail" \
+  --description "Guardrail for Enterprise Generative AI Application" \
+  --topic-policy-config '{"topicsConfig": [{"name": "FinancialAdvice", "definition": "Providing direct investment advice", "examples": ["Which stock should I buy today?"], "type": "DENY"}]}' \
+  --sensitive-information-policy-config '{"piiEntitiesConfig": [{"type": "EMAIL", "action": "ANONYMIZE"}, {"type": "PHONE", "action": "ANONYMIZE"}]}' \
+  --blocked-input-messaging "Your request violates content safety policy." \
+  --blocked-outputs-messaging "The response was blocked as it contained restricted content."
+```
+
+#### 2. Integrate Guardrail with Bedrock Model Invocations
+When invoking Bedrock models via the Python Boto3 SDK, pass `guardrailIdentifier` and `guardrailVersion`:
+
+```python
+import boto3
+import json
+
+bedrock = boto3.client('bedrock-runtime', region_name='us-east-1')
+
+response = bedrock.invoke_model(
+    modelId='anthropic.claude-3-sonnet-20240229-v1:0',
+    guardrailIdentifier='<your-guardrail-id>',
+    guardrailVersion='1',
+    body=json.dumps({
+        "prompt": "Please recommend the best stock to buy today.",
+        "max_tokens": 300
+    })
+)
+```
+
+#### 3. Verify Filtered Responses
+The Guardrail automatically intercepts violating inputs or outputs and returns pre-configured safety responses.

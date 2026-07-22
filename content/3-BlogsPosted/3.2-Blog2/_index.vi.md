@@ -1,31 +1,89 @@
 ---
 title: "Blog 2"
-date: 2024-01-01
+date: 2026-06-30
 weight: 1
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# SESSION POLICIES TRONG AMAZON EKS POD IDENTITY
+# TỐI ƯU HÓA AUTOSCALING TRONG AMAZON EKS VỚI KARPENTER
 
-Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Karpenter là giải pháp Kubernetes Node Autoscaler mã nguồn mở thế hệ mới do AWS phát triển, mang lại khả năng cấp phát tài nguyên (*node provisioning*) nhanh chóng, chính xác và tối ưu chi phí hơn rất nhiều so với Kubernetes Cluster Autoscaler truyền thống.
 
-Các điểm chính cần nắm:
+### Các điểm chính cần nắm:
 
-* Session policy là một IAM policy inline được chỉ định khi tạo hoặc cập nhật Pod Identity association.
-* Quyền hiệu quả = intersection (giao) giữa permissions của IAM role và session policy → session policy chỉ có thể thu hẹp, không thể mở rộng quyền.
-* Giúp tránh tình trạng over-permissioning khi reuse chung một IAM role cho nhiều workloads có nhu cầu khác nhau.
-* Hỗ trợ cả same-account và cross-account (qua IAM role chaining).
-* Giảm đáng kể số lượng IAM roles cần quản lý, tránh chạm giới hạn quota IAM trong cluster lớn.
-* Cấu hình dễ dàng qua AWS Management Console, AWS CLI hoặc AWS SDK khi tạo association giữa Kubernetes ServiceAccount và IAM role.
+* **Just-in-Time Provisioning**: Karpenter lắng nghe trực tiếp các Pod ở trạng thái *Unschedulable* và tự động tính toán nhu cầu tài nguyên (CPU, RAM, GPU, Architecture) để khởi tạo đúng loại EC2 instance phù hợp nhất chỉ trong vài giây.
+* **Tối ưu chi phí vượt trội (Consolidation & Spot Instances)**: Tự động gom nhóm các Pod (*defragmentation*) và thay thế các node dư thừa tài nguyên bằng các instance nhỏ hơn hoặc tận dụng EC2 Spot Instances với chi phí thấp hơn tới 90%.
+* **Bỏ qua Node Groups**: Karpenter tương tác trực tiếp với AWS EC2 Fleet API, không phụ thuộc vào Auto Scaling Groups (ASG) hay Managed Node Groups của EKS.
+* **Tự động thay thế & Quản lý vòng đời**: Tự động thay thế node cũ khi hết hạn (*drift/expiry*), giúp đảm bảo an ninh và nâng cấp phiên bản node mượt mà không làm gián đoạn ứng dụng.
 
-Tính năng này đặc biệt hữu ích khi bạn có nhiều ứng dụng chạy trên cùng một IAM role nhưng cần giới hạn quyền khác nhau (ví dụ: một pod chỉ đọc S3 bucket cụ thể, pod khác chỉ gọi một số API nhất định).
+---
 
-...Hình ảnh...
+### Link bài đăng Facebook
+- **Đường dẫn bài viết**: [https://www.facebook.com/share/p/19MaWGhgGr/](https://www.facebook.com/share/p/19MaWGhgGr/)
 
-...Link...
+---
 
-...Hướng dẫn...
+### Hướng dẫn triển khai Karpenter trên Amazon EKS Cluster
+
+#### 1. Cấu hình IAM Role & ServiceAccount cho Karpenter
+Karpenter cần IAM Role với quyền tạo/xóa EC2 Instances và gán IAM Instance Profile cho worker nodes:
+
+```bash
+# Tạo ServiceAccount và liên kết IAM Role cho Karpenter Controller
+eksctl create iamserviceaccount \
+  --cluster my-eks-cluster \
+  --namespace karpenter \
+  --name karpenter \
+  --role-name my-eks-cluster-karpenter \
+  --attach-policy-arn arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy \
+  --approve
+```
+
+#### 2. Cấu hình NodePool & EC2NodeClass
+Định nghĩa tài nguyên node mà Karpenter được phép cấp phát:
+
+```yaml
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: default
+spec:
+  template:
+    spec:
+      requirements:
+        - key: kubernetes.io/arch
+          operator: In
+          values: ["amd64", "arm64"]
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: ["spot", "on-demand"]
+        - key: karpenter.k8s.aws/instance-category
+          operator: In
+          values: ["c", "m", "r"]
+      nodeClassRef:
+        group: karpenter.k8s.aws
+        kind: EC2NodeClass
+        name: default
+  disruption:
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 1m
+---
+apiVersion: karpenter.k8s.aws/v1
+kind: EC2NodeClass
+metadata:
+  name: default
+spec:
+  amiSelectorTerms:
+    - alias: al2023@latest
+  role: KarpenterNodeRole-my-eks-cluster
+  subnetSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: my-eks-cluster
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: my-eks-cluster
+```
+
+#### 3. Kiểm tra tính năng Tự động Cấp phát (Provisioning)
+Khi triển khai một Deployment có số lượng Replicas lớn hoặc yêu cầu tài nguyên cao, Karpenter sẽ lập tức nhận diện và tạo các EC2 instance phù hợp trong thời gian ngắn, giúp giảm thiểu thời gian chờ đợi của Pod.
