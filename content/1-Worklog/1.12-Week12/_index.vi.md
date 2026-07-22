@@ -21,7 +21,7 @@ pre: " <b> 1.12. </b> "
 | 6   | -                                                                                          | 25/07/2026   | 25/07/2026      | <https://cloudjourney.awsstudygroup.com/> |
 
 
-### Kết quả đạt được tuần 22:
+### Kết quả đạt được tuần 12:
 
 * Hoàn thiện Workshop và chuẩn hóa tài liệu kỹ thuật.
 * Tổng kết kiến thức và kinh nghiệm thu được trong suốt quá trình thực tập.

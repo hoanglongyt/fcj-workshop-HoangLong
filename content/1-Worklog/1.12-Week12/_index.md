@@ -1,6 +1,6 @@
 ---
 title: "Worklog Week 12"
-date: 2026-07-27
+date: 2026-07-22
 weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
@@ -9,7 +9,7 @@ pre: " <b> 1.12. </b> "
 ⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
 {{% /notice %}}
 
-### Week 22 Objectives:
+### Week 12 Objectives:
 
 * Complete the Workshop and technical documentation.
 * Complete the internship report.
@@ -23,7 +23,7 @@ pre: " <b> 1.12. </b> "
 | 5 | - | 24/07/2026 | 24/07/2026 | <https://cloudjourney.awsstudygroup.com/> |
 | 6 | - | 25/07/2026 | 25/07/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
-### Results achieved in Week 22:
+### Results achieved in Week 12:
 
 * Completed the Workshop and standardized the technical documentation.
 * Summarized the knowledge and experience gained throughout the internship.

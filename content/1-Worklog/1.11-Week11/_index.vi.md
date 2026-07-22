@@ -7,7 +7,7 @@ pre: " <b> 1.11. </b> "
 ---
 
 
-### Mục tiêu tuần 15:
+### Mục tiêu tuần 11:
 
 * Hoàn thiện đề tài Workshop trên nền tảng AWS.
 * Kiểm thử và tối ưu các chức năng của hệ thống.
@@ -25,7 +25,7 @@ pre: " <b> 1.11. </b> "
 | 6   | -                                                                                          | 18/07/2026   | 18/07/2026      | <https://cloudjourney.awsstudygroup.com/> |
 
 
-### Kết quả đạt được tuần 15:
+### Kết quả đạt được tuần 11:
 
 * Hoàn thiện các chức năng chính của Workshop.
 * Kiểm thử và tối ưu hệ thống trước khi trình bày.

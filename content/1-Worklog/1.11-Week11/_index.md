@@ -23,7 +23,7 @@ pre: " <b> 1.11. </b> "
 | 5 | - Export draw.io diagrams and attach the draw.io source to the report. | 17/07/2026 | 17/07/2026 | draw.io |
 | 6 | - | 18/07/2026 | 18/07/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
-### Results achieved in Week 15:
+### Results achieved in Week 11:
 
 * Completed the main Workshop features.
 * Tested and optimized the system before presentation.
