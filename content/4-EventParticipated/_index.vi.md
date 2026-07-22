@@ -23,8 +23,8 @@ Trong quá trình thực tập, em đã tham gia 2 sự kiện lớn, mỗi sự
 
 ---
 
-### [Event 2 - GenAI-powered App-DB Modernization Workshop](4.2-Event2/)
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization Workshop  
+### [Event 2 - GenAI-powered App-DB Modernization & Cloud Sharing Session](4.2-Event2/)
+&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization & Cloud Sharing Session  
 
 &emsp;**Thời gian:** 09:00, Ngày 06/06/2026  
 
@@ -32,6 +32,6 @@ Trong quá trình thực tập, em đã tham gia 2 sự kiện lớn, mỗi sự
 
 &emsp;**Vai trò:** Người tham dự  
 
-&emsp;**Mô tả ngắn gọn:** Tham gia workshop hiện đại hóa ứng dụng và cơ sở dữ liệu với sự hỗ trợ của Generative AI cùng các diễn giả chuyên gia đến từ AWS (Jignesh Shah, Erica Liu, Fabrianne Effendi). Nội dung bao gồm phương pháp Domain-Driven Design (DDD), Event-Driven Architecture, tiến trình tiến hóa Compute (EC2 ➔ ECS ➔ Fargate ➔ Lambda), và ứng dụng Amazon Q Developer trong SDLC.  
+&emsp;**Mô tả ngắn gọn:** Tham gia workshop chuyên sâu về hiện đại hóa ứng dụng và chia sẻ lộ trình Cloud/DevOps với 6 chuyên đề đa dạng: Đóng gói Docker (Bảo Huỳnh), Bảo mật AWS WAF & Machine Learning (Lê Hoàng Gia Đại), Game Cloud Multiplayer với Godot & AWS WebSockets (Nguyễn Quốc Bảo), Kỹ năng làm việc nhóm hiệu quả (Trương Phước), Lộ trình chuyển đổi từ IT Helpdesk sang Cloud-DevOps (Vinh Trần), và Xây dựng Graph Knowledge Base cho GraphRAG với Amazon Neptune (Việt Phát).  
 
-&emsp;**Kết quả đạt được:** Nắm vững tư duy thiết kế hệ thống business-first, phương pháp phân tách microservices với bounded contexts, tối ưu hóa giao tiếp bất đồng bộ và ứng dụng công cụ AI Amazon Q Developer để nâng cao năng suất lập trình.  
+&emsp;**Kết quả đạt được:** Nắm vững tư duy đóng gói ứng dụng với Docker, mô hình bảo mật tự động ML-based NIDS trên AWS, kiến trúc truyền thông thời gian thực với WebSockets, phương pháp làm việc nhóm chuyên nghiệp, lộ trình tự học chuyển đổi sự nghiệp Cloud-DevOps và công nghệ tri thức AI tiên phong với GraphRAG & Amazon Neptune.  

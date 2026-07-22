@@ -23,8 +23,8 @@ During my internship, I participated in two major events. Each event provided va
 
 ---
 
-### [Event 2 - GenAI-powered App-DB Modernization Workshop](4.2-Event2/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization Workshop  
+### [Event 2 - GenAI-powered App-DB Modernization & Cloud Sharing Session](4.2-Event2/)  
+&emsp;**Event Name:** GenAI-powered App-DB Modernization & Cloud Sharing Session  
 
 &emsp;**Date & Time:** 09:00, June 06, 2026  
 
@@ -32,6 +32,6 @@ During my internship, I participated in two major events. Each event provided va
 
 &emsp;**Role:** Attendee  
 
-&emsp;**Brief Description:** Attended an application and database modernization workshop powered by Generative AI with AWS expert speakers (Jignesh Shah, Erica Liu, Fabrianne Effendi). Key topics included Domain-Driven Design (DDD), Event-Driven Architecture, compute evolution (EC2 ➔ ECS ➔ Fargate ➔ Lambda), and Amazon Q Developer for SDLC automation.  
+&emsp;**Brief Description:** Attended an in-depth workshop on application modernization and Cloud/DevOps career sharing featuring 6 key topics: Docker Containerization (Bao Huynh), AWS WAF & Machine Learning Security (Le Hoang Gia Dai), Cloud Multiplayer Gaming with Godot & AWS WebSockets (Nguyen Quoc Bao), Effective Teamwork Skills (Truong Phuoc), Career Transition Roadmap from Helpdesk to Cloud-DevOps (Vinh Tran), and Building a Graph Knowledge Base for GraphRAG using Amazon Neptune (Viet Phat).  
 
-&emsp;**Key Outcomes:** Mastered a business-first design mindset, microservice decomposition using bounded contexts, asynchronous event-driven messaging, and leveraging Amazon Q Developer to boost development productivity.  
+&emsp;**Key Outcomes:** Mastered application containerization concepts with Docker, automated ML-based NIDS security models on AWS, real-time communication architectures with WebSockets, professional teamwork principles, a self-study Cloud-DevOps career roadmap, and pioneering AI knowledge techniques with GraphRAG & Amazon Neptune.  
