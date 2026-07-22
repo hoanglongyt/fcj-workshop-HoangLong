@@ -1,9 +1,9 @@
 ---
-title: "Worklog Tuần 22"
+title: "Worklog Tuần 12"
 date: 2026-07-27
-weight: 2
+weight: 12
 chapter: false
-pre: " <b> 1.22 </b> "
+pre: " <b> 1.12. </b> "
 ---
 
 ### Mục tiêu tuần 22:
