@@ -1,12 +1,12 @@
 ---
-title: "Thiết kế và Triển khai Hạ tầng AWS cho Hệ thống TSL-SignMap"
+title: "Workshop"
 date: 2026-07-22
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Thiết kế và Triển khai Hạ tầng AWS cho Hệ thống TSL-SignMap
+#### Thiết kế và Triển khai Hạ tầng AWS cho Hệ thống TSL-SignMap
 
 #### Tổng quan
 
