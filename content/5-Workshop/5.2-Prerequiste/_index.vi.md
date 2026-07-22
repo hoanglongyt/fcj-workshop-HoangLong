@@ -1,242 +1,77 @@
 ---
-title : "Các bước chuẩn bị"
-date : 2024-01-01 
+title : "Các bước chuẩn bị & Phân chia mạng VPC"
+date : 2026-07-22 
 weight : 2
 chapter : false
 pre : " <b> 5.2. </b> "
 ---
 
-#### IAM permissions
-Gắn IAM permission policy sau vào tài khoản aws user của bạn để triển khai và dọn dẹp tài nguyên trong workshop này.
-```
+#### 1. Yêu cầu Quyền IAM (IAM Permissions)
+
+Để triển khai toàn bộ hạ tầng hệ thống **TSL-SignMap** bao gồm VPC 3-Tier, cụm EC2 Instances, RDS SQL Server, Application Load Balancer, S3 Buckets và Secrets Manager, tài khoản AWS của bạn cần có IAM Policy với các quyền dịch vụ dưới đây:
+
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "VisualEditor0",
+            "Sid": "TSLSignMapInfrastructurePermissions",
             "Effect": "Allow",
             "Action": [
-                "cloudformation:*",
+                "ec2:*",
+                "rds:*",
+                "s3:*",
+                "elasticloadbalancing:*",
+                "autoscaling:*",
                 "cloudwatch:*",
-                "ec2:AcceptTransitGatewayPeeringAttachment",
-                "ec2:AcceptTransitGatewayVpcAttachment",
-                "ec2:AllocateAddress",
-                "ec2:AssociateAddress",
-                "ec2:AssociateIamInstanceProfile",
-                "ec2:AssociateRouteTable",
-                "ec2:AssociateSubnetCidrBlock",
-                "ec2:AssociateTransitGatewayRouteTable",
-                "ec2:AssociateVpcCidrBlock",
-                "ec2:AttachInternetGateway",
-                "ec2:AttachNetworkInterface",
-                "ec2:AttachVolume",
-                "ec2:AttachVpnGateway",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:CreateClientVpnEndpoint",
-                "ec2:CreateClientVpnRoute",
-                "ec2:CreateCustomerGateway",
-                "ec2:CreateDhcpOptions",
-                "ec2:CreateFlowLogs",
-                "ec2:CreateInternetGateway",
-                "ec2:CreateLaunchTemplate",
-                "ec2:CreateNetworkAcl",
-                "ec2:CreateNetworkInterface",
-                "ec2:CreateNetworkInterfacePermission",
-                "ec2:CreateRoute",
-                "ec2:CreateRouteTable",
-                "ec2:CreateSecurityGroup",
-                "ec2:CreateSubnet",
-                "ec2:CreateSubnetCidrReservation",
-                "ec2:CreateTags",
-                "ec2:CreateTransitGateway",
-                "ec2:CreateTransitGatewayPeeringAttachment",
-                "ec2:CreateTransitGatewayPrefixListReference",
-                "ec2:CreateTransitGatewayRoute",
-                "ec2:CreateTransitGatewayRouteTable",
-                "ec2:CreateTransitGatewayVpcAttachment",
-                "ec2:CreateVpc",
-                "ec2:CreateVpcEndpoint",
-                "ec2:CreateVpcEndpointConnectionNotification",
-                "ec2:CreateVpcEndpointServiceConfiguration",
-                "ec2:CreateVpnConnection",
-                "ec2:CreateVpnConnectionRoute",
-                "ec2:CreateVpnGateway",
-                "ec2:DeleteCustomerGateway",
-                "ec2:DeleteFlowLogs",
-                "ec2:DeleteInternetGateway",
-                "ec2:DeleteNetworkInterface",
-                "ec2:DeleteNetworkInterfacePermission",
-                "ec2:DeleteRoute",
-                "ec2:DeleteRouteTable",
-                "ec2:DeleteSecurityGroup",
-                "ec2:DeleteSubnet",
-                "ec2:DeleteSubnetCidrReservation",
-                "ec2:DeleteTags",
-                "ec2:DeleteTransitGateway",
-                "ec2:DeleteTransitGatewayPeeringAttachment",
-                "ec2:DeleteTransitGatewayPrefixListReference",
-                "ec2:DeleteTransitGatewayRoute",
-                "ec2:DeleteTransitGatewayRouteTable",
-                "ec2:DeleteTransitGatewayVpcAttachment",
-                "ec2:DeleteVpc",
-                "ec2:DeleteVpcEndpoints",
-                "ec2:DeleteVpcEndpointServiceConfigurations",
-                "ec2:DeleteVpnConnection",
-                "ec2:DeleteVpnConnectionRoute",
-                "ec2:Describe*",
-                "ec2:DetachInternetGateway",
-                "ec2:DisassociateAddress",
-                "ec2:DisassociateRouteTable",
-                "ec2:GetLaunchTemplateData",
-                "ec2:GetTransitGatewayAttachmentPropagations",
-                "ec2:ModifyInstanceAttribute",
-                "ec2:ModifySecurityGroupRules",
-                "ec2:ModifyTransitGatewayVpcAttachment",
-                "ec2:ModifyVpcAttribute",
-                "ec2:ModifyVpcEndpoint",
-                "ec2:ReleaseAddress",
-                "ec2:ReplaceRoute",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:RevokeSecurityGroupIngress",
-                "ec2:RunInstances",
-                "ec2:StartInstances",
-                "ec2:StopInstances",
-                "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-                "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
-                "iam:AddRoleToInstanceProfile",
-                "iam:AttachRolePolicy",
-                "iam:CreateInstanceProfile",
-                "iam:CreatePolicy",
-                "iam:CreateRole",
-                "iam:DeleteInstanceProfile",
-                "iam:DeletePolicy",
-                "iam:DeleteRole",
-                "iam:DeleteRolePolicy",
-                "iam:DetachRolePolicy",
-                "iam:GetInstanceProfile",
-                "iam:GetPolicy",
-                "iam:GetRole",
-                "iam:GetRolePolicy",
-                "iam:ListPolicyVersions",
-                "iam:ListRoles",
+                "logs:*",
+                "secretsmanager:*",
+                "acm:*",
+                "route53:*",
+                "servicediscovery:*",
+                "elasticache:*",
+                "sagemaker:*",
                 "iam:PassRole",
-                "iam:PutRolePolicy",
-                "iam:RemoveRoleFromInstanceProfile",
-                "lambda:CreateFunction",
-                "lambda:DeleteFunction",
-                "lambda:DeleteLayerVersion",
-                "lambda:GetFunction",
-                "lambda:GetLayerVersion",
-                "lambda:InvokeFunction",
-                "lambda:PublishLayerVersion",
-                "logs:CreateLogGroup",
-                "logs:DeleteLogGroup",
-                "logs:DescribeLogGroups",
-                "logs:PutRetentionPolicy",
-                "route53:ChangeTagsForResource",
-                "route53:CreateHealthCheck",
-                "route53:CreateHostedZone",
-                "route53:CreateTrafficPolicy",
-                "route53:DeleteHostedZone",
-                "route53:DisassociateVPCFromHostedZone",
-                "route53:GetHostedZone",
-                "route53:ListHostedZones",
-                "route53domains:ListDomains",
-                "route53domains:ListOperations",
-                "route53domains:ListTagsForDomain",
-                "route53resolver:AssociateResolverEndpointIpAddress",
-                "route53resolver:AssociateResolverRule",
-                "route53resolver:CreateResolverEndpoint",
-                "route53resolver:CreateResolverRule",
-                "route53resolver:DeleteResolverEndpoint",
-                "route53resolver:DeleteResolverRule",
-                "route53resolver:DisassociateResolverEndpointIpAddress",
-                "route53resolver:DisassociateResolverRule",
-                "route53resolver:GetResolverEndpoint",
-                "route53resolver:GetResolverRule",
-                "route53resolver:ListResolverEndpointIpAddresses",
-                "route53resolver:ListResolverEndpoints",
-                "route53resolver:ListResolverRuleAssociations",
-                "route53resolver:ListResolverRules",
-                "route53resolver:ListTagsForResource",
-                "route53resolver:UpdateResolverEndpoint",
-                "route53resolver:UpdateResolverRule",
-                "s3:AbortMultipartUpload",
-                "s3:CreateBucket",
-                "s3:DeleteBucket",
-                "s3:DeleteObject",
-                "s3:GetAccountPublicAccessBlock",
-                "s3:GetBucketAcl",
-                "s3:GetBucketOwnershipControls",
-                "s3:GetBucketPolicy",
-                "s3:GetBucketPolicyStatus",
-                "s3:GetBucketPublicAccessBlock",
-                "s3:GetObject",
-                "s3:GetObjectVersion",
-                "s3:GetBucketVersioning",
-                "s3:ListAccessPoints",
-                "s3:ListAccessPointsForObjectLambda",
-                "s3:ListAllMyBuckets",
-                "s3:ListBucket",
-                "s3:ListBucketMultipartUploads",
-                "s3:ListBucketVersions",
-                "s3:ListJobs",
-                "s3:ListMultipartUploadParts",
-                "s3:ListMultiRegionAccessPoints",
-                "s3:ListStorageLensConfigurations",
-                "s3:PutAccountPublicAccessBlock",
-                "s3:PutBucketAcl",
-                "s3:PutBucketPolicy",
-                "s3:PutBucketPublicAccessBlock",
-                "s3:PutObject",
-                "secretsmanager:CreateSecret",
-                "secretsmanager:DeleteSecret",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:ListSecrets",
-                "secretsmanager:ListSecretVersionIds",
-                "secretsmanager:PutResourcePolicy",
-                "secretsmanager:TagResource",
-                "secretsmanager:UpdateSecret",
-                "sns:ListTopics",
-                "ssm:DescribeInstanceProperties",
-                "ssm:DescribeSessions",
-                "ssm:GetConnectionStatus",
-                "ssm:GetParameters",
-                "ssm:ListAssociations",
-                "ssm:ResumeSession",
-                "ssm:StartSession",
-                "ssm:TerminateSession"
+                "iam:CreateRole",
+                "iam:AttachRolePolicy"
             ],
             "Resource": "*"
         }
     ]
 }
-
 ```
 
-#### Khởi tạo tài nguyên bằng CloudFormation
+---
 
-Trong lab này, chúng ta sẽ dùng N.Virginia region (us-east-1).
+#### 2. Cấu hình Hạ tầng Mạng AWS VPC (VPC & Subnet Planning)
 
-Để chuẩn bị cho môi trường làm workshop, chúng ta deploy CloudFormation template sau (click link): [PrivateLinkWorkshop ](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.us-east-1.amazonaws.com/reinvent-endpoints-builders-session/Nested.yaml&stackName=PLCloudSetup). Để nguyên các lựa chọn mặc định.
+Hạ tầng mạng của hệ thống **TSL-SignMap** được triển khai tại AWS Region Singapore (`ap-southeast-1`) với dải mạng tổng **AWS VPC CIDR (`10.0.0.0/16`)** chia thành 3 tầng Subnet riêng biệt trải rộng trên 2 Availability Zones (**AZ - A** và **AZ - B**):
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack1.png)
+##### Bảng phân chia dải mạng Subnets (CIDR Block Table)
 
-+ Lựa chọn 2 mục acknowledgement 
-+ Chọn Create stack
+| Tầng Phân Mạng | Subnet Name | Availability Zone | Dải Mạng CIDR | Mục Đích Sử Dụng |
+| :--- | :--- | :--- | :--- | :--- |
+| **Public Subnet** | `Public Subnet A` | `ap-southeast-1a` (AZ-A) | `10.0.1.0/24` | Chứa ALB tiếp nhận lưu lượng HTTPS API công cộng và NAT Gateway A |
+| **Public Subnet** | `Public Subnet B` | `ap-southeast-1b` (AZ-B) | `10.0.1.128/24` | Chứa ALB phụ và NAT Gateway B dự phòng Multi-AZ |
+| **Private App Subnet** | `Private Subnet A` | `ap-southeast-1a` (AZ-A) | `10.0.2.0/24` | Chứa EC2 Ocelot API Gateway, 7 Microservices Containers & EC2 Scraper Instance |
+| **Private App Subnet** | `Private Subnet B` | `ap-southeast-1b` (AZ-B) | `10.0.2.128/24` | Chứa cụm EC2 Ocelot API Gateway + Microservices dự phòng |
+| **Private DB Subnet** | `Private DB Sub A` | `ap-southeast-1a` (AZ-A) | `10.0.3.0/24` | Chứa CSDL AWS RDS Primary for SQL Server 2022 (Port 1433) |
+| **Private DB Subnet** | `Private DB Sub B` | `ap-southeast-1b` (AZ-B) | `10.0.3.128/24` | Chứa AWS RDS Standby SQL Server (Multi-AZ synchronous replication) & ElastiCache (Redis) |
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack2.png)
+---
 
-Quá trình triển khai CloudFormation cần khoảng 15 phút để hoàn thành.
+#### 3. Quy trình Triển khai Hạ tầng Mạng và Bảo mật
 
-![complete](/images/5-Workshop/5.2-Prerequisite/complete.png)
+##### Bước 1: Khởi tạo AWS VPC & Gateway
+1. Truy cập **AWS VPC Console** chọn **Create VPC**.
+2. Chọn **VPC and more**, nhập **Name tag**: `TSL-SignMap-VPC`.
+3. Nhập dải IP **IPv4 CIDR block**: `10.0.0.0/16`.
+4. Chọn **Number of Availability Zones (AZs)**: `2` (`ap-southeast-1a` và `ap-southeast-1b`).
+5. Chọn **Number of Public subnets**: `2`.
+6. Chọn **Number of Private subnets**: `4` (2 App Subnets + 2 DB Subnets).
+7. Đánh dấu chọn tạo **NAT Gateways** (In 2 AZs) và **VPC Endpoints** cho kết nối riêng tư.
 
-+ 2 VPCs đã được tạo
-
-![vpcs](/images/5-Workshop/5.2-Prerequisite/vpcs.png)
-
-+ 3 EC2s đã được tạo
-
-![EC2](/images/5-Workshop/5.2-Prerequisite/ec2.png)
+##### Bước 2: Thiết lập Security Groups (Tường lửa cho dịch vụ)
+- **`ALB-Security-Group`**: Cho phép traffic inbound **HTTPS (Port 443)** và **HTTP (Port 80)** từ `0.0.0.0/0`.
+- **`EC2-App-Security-Group`**: Chỉ cho phép traffic inbound **Port 5008 (Ocelot API Gateway)** từ `ALB-Security-Group` và giao tiếp nội bộ giữa 7 Microservices.
+- **`RDS-DB-Security-Group`**: Chỉ cho phép traffic inbound **Port 1433 (SQL Server)** và **Port 6379 (Redis)** từ `EC2-App-Security-Group`.
