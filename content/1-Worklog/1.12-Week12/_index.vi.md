@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1.12. </b> "
 ---
 
-### Mục tiêu tuần 22:
+### Mục tiêu tuần 12:
 
 * Hoàn thiện Workshop và tài liệu kỹ thuật.
 * Hoàn thành báo cáo thực tập.
