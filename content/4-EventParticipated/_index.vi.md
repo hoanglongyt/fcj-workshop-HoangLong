@@ -45,7 +45,7 @@ Trong quá trình thực tập, em đã tham gia 3 sự kiện lớn, mỗi sự
 
 &emsp;**Địa điểm:** Tầng 26, Tòa nhà Bitexco Financial Tower, Số 02 Đường Hải Triều, Phường Sài Gòn, TP. Hồ Chí Minh  
 
-&emsp;**Vai trò:** Diễn giả / Người tham dự  
+&emsp;**Vai trò:** Người tham dự  
 
 &emsp;**Mô tả ngắn gọn:** Lắng nghe và chia sẻ trải nghiệm thực chiến tại cuộc thi Agentic AI Build Week (đấu trường Hackathon AI lớn nhất khu vực ASEAN). Sự kiện quy tụ các dự án nổi bật: Solution Architect Professional Native App (Nhóm Plan V), Hackathon Journey 24h (Nhóm 3KA), và Adaptive AML Workflow Engine (Nhóm Six Pillars Team).  
 

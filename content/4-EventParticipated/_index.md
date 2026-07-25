@@ -45,7 +45,7 @@ During my internship, I participated in three major events. Each event provided 
 
 &emsp;**Location:** 26th Floor, Bitexco Financial Tower, No. 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City  
 
-&emsp;**Role:** Speaker / Attendee  
+&emsp;**Role:** Attendee  
 
 &emsp;**Brief Description:** Participated in the sharing session reflecting on the Agentic AI Build Week (the largest AI buildathon in ASEAN). Featured topics include Solution Architect Professional Native App (Plan V Team), 24h Hackathon Journey (3KA Team), and Adaptive AML Workflow Engine (Six Pillars Team).  
 
