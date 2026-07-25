@@ -26,10 +26,10 @@ pre: " <b> 4.3. </b> "
 *Figure 2: Presentation slide on "Solution Architect Professional Native App" presented by Plan V team (Pham Tien Thuan Phat, Huynh Hoang Long, Le Minh Nghia, Tran Dai Vi, Nguyen An)*
 
 ![Hackathon Journey Slide by 3KA](/images/4-EventParticipated/4.3-Event3/pic3.jpg)
-*Figure 3: Presentation slide on "Hackathon Journey: 24 Hours of Building, Failing, and Learning" presented by 3KA team*
+*Figure 3: Presentation slide on "Hackathon Journey: 24 Hours of Building, Failing, and Learning" presented by 3KA team (Huynh An Khuong, Nguyen Quoc Huy, Ngo Quang Khoi, Hoang Le Thanh Duc, Dang Nguyen Phuoc Loc, Dang Truong Hung)*
 
 ![Adaptive AML Workflow Engine Slide by Six Pillars Team](/images/4-EventParticipated/4.3-Event3/pic4.jpg)
-*Figure 4: Presentation slide on "Adaptive AML Workflow Engine" presented by Six Pillars Team*
+*Figure 4: Presentation slide on "Adaptive AML Workflow Engine" presented by Six Pillars Team (Bui Hoang Viet, Nguyen Lam Anh, Nguyen Van Linh, Nguyen Canh Nguyen, Nguyen Minh Nhat, Tran Phuong Huyen)*
 
 ---
 
@@ -42,12 +42,32 @@ pre: " <b> 4.3. </b> "
 
 ---
 
-### Teams & Topics Presented
+### Teams & Members List
 
 1. **FCAJ Organizers** – *"FCAJ - Agentic AI Build Week: Show Up. Build. Pitch. WIN!"*
-2. **Plan V Team** (Pham Tien Thuan Phat, Huynh Hoang Long, Le Minh Nghia, Tran Dai Vi, Nguyen An) – *"Solution Architect Professional Native App"*
-3. **3KA Team** (Huynh An Khuong, Nguyen Quoc Huy, Ngo Quang Khoi, Hoang Le Thanh Duc, Dang Nguyen Phuoc Loc, Dang Truong Hung) – *"Hackathon Journey: 24 Hours of Building, Failing, and Learning"*
-4. **Six Pillars Team** (Bui Hoang Viet, Nguyen Lam Anh, Nguyen Van Linh, Nguyen Canh Nguyen, Nguyen Minh Nhat, Tran Phuong Huyen) – *"Adaptive AML Workflow Engine: Automate investigative data enrichment"*
+2. **Plan V Team**:
+   - Pham Tien Thuan Phat
+   - Huynh Hoang Long
+   - Le Minh Nghia
+   - Tran Dai Vi
+   - Nguyen An
+   - *Topic:* *"Solution Architect Professional Native App"*
+3. **3KA Team**:
+   - Huynh An Khuong
+   - Nguyen Quoc Huy
+   - Ngo Quang Khoi
+   - Hoang Le Thanh Duc
+   - Dang Nguyen Phuoc Loc
+   - Dang Truong Hung
+   - *Topic:* *"Hackathon Journey: 24 Hours of Building, Failing, and Learning"*
+4. **Six Pillars Team**:
+   - Bui Hoang Viet
+   - Nguyen Lam Anh
+   - Nguyen Van Linh
+   - Nguyen Canh Nguyen
+   - Nguyen Minh Nhat
+   - Tran Phuong Huyen
+   - *Topic:* *"Adaptive AML Workflow Engine: Automate investigative data enrichment"*
 
 ---
 
@@ -68,35 +88,3 @@ pre: " <b> 4.3. </b> "
 #### 4. Automating Financial Compliance Workflows with Agentic AI (Six Pillars Team)
 - **Adaptive AML Workflow Engine**: Addressing anti-money laundering (AML) investigative data enrichment challenges.
 - **Legal Compliance Automation**: Transforming hours of manual data searches into legally compliant, automated reports using Agentic AI capabilities.
-
----
-
-### Key Takeaways
-
-#### Technical & Architectural Mindset
-- **Real-World Agentic AI**: Mastering autonomous AI Agents to automate complex business processes (such as AML financial investigations or Solution Architect workflow management).
-- **Standardizing Native App Infrastructure**: Adopting high-performance, secure Native Application architectures on AWS Cloud.
-
-#### Practical Skills & Personal Growth
-- **Hackathon Resilience**: Understanding the power of perseverance, troubleshooting agility, and teamwork under intense pressure.
-- **Embracing Failure**: Viewing mistakes and obstacles during development as essential learning stepping stones.
-
----
-
-### Applying to Work & Study
-
-- **Innovate Learning Methods**: Incorporating Agentic AI principles into course projects to automate repetitive tasks.
-- **Enhance Presentation & Pitching**: Learning concise, persuasive communication techniques from project pitches.
-- **Strengthen Team Collaboration**: Implementing structured teamwork and task division practices derived from 3KA and Plan V team experiences.
-
----
-
-### Event Experience
-
-Attending the **“FCAJ - Agentic AI Build Week Sharing Session”** was an empowering experience:
-
-- **Spark of Innovation**: Seeing groundbreaking AI products built by talented teams energized my motivation in cloud and AI technology.
-- **Authentic Knowledge Sharing**: Behind-the-scenes stories of sleepless nights, bug struggles, and triumph from 3KA and Plan V brought deep inspiration.
-- **Real-world Enterprise AI**: The Six Pillars Team presentation proved the immense potential of Agentic AI in solving enterprise compliance problems.
-
-> Overall, the event was a memorable milestone reinforcing the spirit of "Show Up. Build. Pitch. WIN!" and igniting passion for mastering Cloud & AI technologies.
