@@ -13,7 +13,7 @@ pre: " <b> 4.3. </b> "
 - **Thời gian:** 08:30 AM - 12:00 PM, Ngày 25/07/2026
 - **Địa điểm:** Tầng 26, Tòa nhà Bitexco Financial Tower, Số 02 Đường Hải Triều, Phường Sài Gòn, TP. Hồ Chí Minh
 - **Đơn vị tổ chức:** First Cloud AI Journey (FCAJ)
-- **Vai trò:** Diễn giả / Người tham dự
+- **Vai trò:** Người tham dự
 
 ### MINH CHỨNG THAM GIA SỰ KIỆN (25/07/2026)
 
