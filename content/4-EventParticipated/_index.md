@@ -41,7 +41,7 @@ During my internship, I participated in three major events. Each event provided 
 ### [Event 3 - FCAJ Agentic AI Build Week Sharing Session](4.3-Event3/)  
 &emsp;**Event Name:** FCAJ - Agentic AI Build Week Sharing Session  
 
-&emsp;**Date & Time:** 08:30 AM, July 25, 2026  
+&emsp;**Date & Time:** 08:30, July 25, 2026  
 
 &emsp;**Location:** 26th Floor, Bitexco Financial Tower, No. 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City  
 
