@@ -13,7 +13,7 @@ pre: " <b> 4.3. </b> "
 - **Thời gian:** 08:30 AM - 12:00 PM, Ngày 25/07/2026
 - **Địa điểm:** Tầng 26, Tòa nhà Bitexco Financial Tower, Số 02 Đường Hải Triều, Phường Sài Gòn, TP. Hồ Chí Minh
 - **Đơn vị tổ chức:** First Cloud AI Journey (FCAJ)
-- **Vai trò:** Diễn giả / Người tham dự
+- **Vai trò:** Người tham dự
 
 ---
 
@@ -61,7 +61,7 @@ pre: " <b> 4.3. </b> "
   - Giải quyết bài toán áp lực thời gian của các Solution Architect khi nhận yêu cầu thiết kế hệ thống AI/Cloud gấp từ khách hàng.
   - Phân tích yêu cầu bằng ngôn ngữ tự nhiên, tự động sinh phương án kiến trúc High-Level (hỗ trợ Hybrid-Cloud).
   - Tự động tạo sơ đồ kiến trúc chỉnh sửa được trên Draw.io sử dụng bộ **AWS Architecture Icons** chuẩn.
-  - Tự động dự toán chi phí vận hành dịch vụ AWS cho Region Singapore (`ap-southeast-1`) và sinh mã IaC (Infrastructure as Code).
+  - Tự động dự toán chi phí vận hành dịch vụ AWS và sinh mã IaC (Infrastructure as Code).
 
 #### 3. Nhóm 3KA
 - **Thành viên:** Huỳnh An Khương, Nguyễn Quốc Huy, Ngô Quang Khôi, Hoàng Lê Thành Đức, Đặng Nguyễn Phước Lộc, Đặng Trường Hưng.

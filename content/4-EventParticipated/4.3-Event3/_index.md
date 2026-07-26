@@ -13,7 +13,7 @@ pre: " <b> 4.3. </b> "
 - **Time:** 08:30 AM - 12:00 PM, July 25, 2026
 - **Location:** 26th Floor, Bitexco Financial Tower, No. 02 Hai Trieu Street, Sai Gon Ward, HCMC
 - **Organized by:** First Cloud AI Journey (FCAJ)
-- **Role:** Speaker / Attendee
+- **Role:** Attendee
 
 ---
 
@@ -61,7 +61,7 @@ pre: " <b> 4.3. </b> "
   - Solves tight deadline pressures for Solution Architects designing AI/Cloud systems from customer SOP documents.
   - Analyzes natural language requirements and drafts high-level architecture options (supporting Hybrid-Cloud models).
   - Automatically generates editable Draw.io diagrams using official **AWS Architecture Icons**.
-  - Produces directional AWS cost estimates for Singapore region (`ap-southeast-1`) and generates IaC (Infrastructure as Code).
+  - Produces directional AWS cost estimates and generates IaC (Infrastructure as Code).
 
 #### 3. 3KA Team
 - **Members:** Huynh An Khuong, Nguyen Quoc Huy, Ngo Quang Khoi, Hoang Le Thanh Duc, Dang Nguyen Phuoc Loc, Dang Truong Hung.

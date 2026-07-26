@@ -45,8 +45,8 @@ During my internship, I participated in three major events. Each event provided 
 
 &emsp;**Location:** 26th Floor, Bitexco Financial Tower, No. 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City  
 
-&emsp;**Role:** Attendee  
+&emsp;**Role:** Speaker / Attendee  
 
-&emsp;**Brief Description:** Participated in the sharing session reflecting on the Agentic AI Build Week (the largest AI buildathon in ASEAN). Featured topics include Solution Architect Professional Native App (Plan V Team), 24h Hackathon Journey (3KA Team), and Adaptive AML Workflow Engine (Six Pillars Team).  
+&emsp;**Brief Description:** Presented and participated in the sharing session reflecting on the Agentic AI Build Week (the largest AI buildathon in ASEAN with 300+ global builders). Featured innovative projects: Solution Architect Professional AI Native App (Plan V Team), S.H.E.P.H.E.R.D Crowd Monitoring (3KA Team), Signal Scout Corporate Change Detection (Signal Scout Team), and Adaptive AML Workflow Engine (Six Pillars Team).  
 
-&emsp;**Key Outcomes:** Learned practical Agentic AI workflow automation techniques, AWS Native App architecture design, time management under pressure, and perseverance through 24-hour Hackathons.  
+&emsp;**Key Outcomes:** Learned practical Agentic AI methods for automating AWS Solution Architect design (generating Draw.io diagrams, IaC, and cost estimates); mastered real-time monitoring systems integrating Computer Vision (YOLO, ByteTrack), SageMaker, and Bedrock; gained insights into legal compliance AML data enrichment, and developed 24-hour Hackathon resilience.  
