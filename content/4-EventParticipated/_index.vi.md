@@ -41,12 +41,12 @@ Trong quá trình thực tập, em đã tham gia 3 sự kiện lớn, mỗi sự
 ### [Event 3 - FCAJ Agentic AI Build Week Sharing Session](4.3-Event3/)
 &emsp;**Tên sự kiện:** FCAJ - Agentic AI Build Week Sharing Session  
 
-&emsp;**Thời gian:** 08:30 AM, Ngày 25/07/2026  
+&emsp;**Thời gian:** 08:30, Ngày 25/07/2026  
 
 &emsp;**Địa điểm:** Tầng 26, Tòa nhà Bitexco Financial Tower, Số 02 Đường Hải Triều, Phường Sài Gòn, TP. Hồ Chí Minh  
 
-&emsp;**Vai trò:** Diễn giả / Người tham dự  
+&emsp;**Vai trò:** Người tham dự  
 
-&emsp;**Mô tả ngắn gọn:** Tham gia báo cáo và chia sẻ trải nghiệm thực chiến tại cuộc thi Agentic AI Build Week (đấu trường Hackathon AI lớn nhất khu vực ASEAN với 300+ global builders). Sự kiện trình bày các giải pháp công nghệ nổi bật: Solution Architect Professional AI Native App (Nhóm Plan V), Giám sát luồng người S.H.E.P.H.E.R.D (Nhóm 3KA), Phát hiện tín hiệu chiến lược doanh nghiệp Signal Scout (Nhóm Signal Scout), và Tự động hóa điều tra chống rửa tiền Adaptive AML Workflow Engine (Nhóm Six Pillars Team).  
+&emsp;**Mô tả ngắn gọn:** Lắng nghe và chia sẻ trải nghiệm thực chiến tại cuộc thi Agentic AI Build Week (đấu trường Hackathon AI lớn nhất khu vực ASEAN với 300+ global builders). Sự kiện trình bày các giải pháp công nghệ nổi bật: Solution Architect Professional AI Native App (Nhóm Plan V), Giám sát luồng người S.H.E.P.H.E.R.D (Nhóm 3KA), Phát hiện tín hiệu chiến lược doanh nghiệp Signal Scout (Nhóm Signal Scout), và Tự động hóa điều tra chống rửa tiền Adaptive AML Workflow Engine (Nhóm Six Pillars Team).  
 
 &emsp;**Kết quả đạt được:** Học hỏi phương pháp ứng dụng Agentic AI tự động hóa thiết kế kiến trúc AWS Solution Architect, sinh sơ đồ Draw.io/IaC và dự toán chi phí tự động; làm chủ hệ thống giám sát thời gian thực kết hợp Computer Vision (YOLO, ByteTrack), SageMaker và Bedrock; tiếp thu bài học tự động hóa làm giàu dữ liệu tuân thủ pháp lý tài chính cùng kinh nghiệm kiên trì vượt thử thách trong 24 giờ Hackathon.  
